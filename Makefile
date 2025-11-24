@@ -1,13 +1,13 @@
 TITLE=Abstract Algebra
-FILE=Group
+FILES := Group.Def Group.Basic
 
-default: html/$(FILE).html
+default: $(FILES:%=html/%.html)
 	cp html/Agda.css _build/
 	raco tr build
 
-html/%.md : src/%.lagda.md
+.SECONDEXPANSION:
+html/%.md: src/$$(subst .,/,%).lagda.md
 	agda --html --html-highlight=code $<
 
 html/%.html : html/%.md
-	echo '<!DOCTYPE HTML><html><head><meta charset="utf-8"><title>$(TITLE)</title><link rel="stylesheet" href="Agda.css"></head>' > $@
-	pandoc -f markdown -t html $< >> $@
+	pandoc -f markdown -t html $< > $@

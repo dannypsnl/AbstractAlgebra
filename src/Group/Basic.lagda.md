@@ -1,35 +1,15 @@
-# Group
-
-Module
-
-```agda
-module Group where
+```
+module Group.Basic where
 
 open import MLTT.Spartan hiding (_∙_) renaming (_⁻¹ to sym)
 open import UF.Base
 open import UF.Sets
 open import UF.Sets-Properties
+
+open import Group.Def
 ```
 
-Definition
-
-```agda
-record Group (G : 𝓤 ̇) : 𝓤 ̇ where
-  field
-    size : is-set G
-    _∙_ : G → G → G
-    ∙-assoc : associative _∙_
-    e : G
-    neu-l : left-neutral e _∙_
-    neu-r : right-neutral e _∙_
-    _⁻¹ : G → G
-    cancel : {x : G} → ((x ⁻¹) ∙ x ＝ e) × (x ∙ (x ⁻¹) ＝ e)
-
-  infix 40 _⁻¹
-  infixl 20 _∙_
-```
-
-Wrap the following into private module
+Here we encounter some propositions
 
 ```
 module _ (G H : 𝓤 ̇) where
@@ -137,4 +117,3 @@ Group homomorphism preserves identity element.
     VI : (φ e) ＝ e
     VI = (propopsition-3 .pr₁) III
 ```
-
