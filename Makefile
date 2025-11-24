@@ -2,6 +2,8 @@ TITLE=Abstract Algebra
 FILE=Group
 
 default: html/$(FILE).html
+	cp html/Agda.css _build/
+	raco tr build
 
 html/%.md : src/%.lagda.md
 	agda --html --html-highlight=code $<
