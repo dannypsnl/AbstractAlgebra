@@ -1,3 +1,5 @@
 _tmp/
 _build/
 assets/
+# output of literate agda
+html/
