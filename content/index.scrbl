@@ -1,3 +1,4 @@
 @title{Lectures of abstract algebra}
 
-@transclude{alg-0000}
+@p{用 agda 學習抽象代數}
+@transclude[#:open #f]{alg-0000}

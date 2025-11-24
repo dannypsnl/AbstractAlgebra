@@ -1,5 +1,5 @@
-@title{Group}
-@taxon{Definition}
+@title{Group Theory}
 
-@disable-prefix{@include{../html/Group.Def.html}}
+@p{這裡我們開始介紹群論}
+@transclude{Group.Def}
 @transclude{alg-0001}

@@ -10,5 +10,8 @@ default: $(FILES:%=html/%.html)
 html/%.md: src/$$(subst .,/,%).lagda.md
 	agda --html --html-highlight=code $<
 
-html/%.html : html/%.md
+html/%.html: html/%.md
 	pandoc -f markdown -t html $< > $@
+
+deploy:
+	cd _build; vercel --prod
