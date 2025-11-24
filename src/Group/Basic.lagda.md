@@ -7,7 +7,6 @@ open import UF.Sets
 open import UF.Sets-Properties
 
 open import Group.Def
-
 open Group {{...}}
 ```
 

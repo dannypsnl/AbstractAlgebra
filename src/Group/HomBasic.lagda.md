@@ -7,6 +7,7 @@ open import UF.Sets
 open import UF.Sets-Properties
 
 open import Group.Def
+open Group {{...}}
 open import Group.Basic
 open import Group.DefHom
 ```
@@ -16,8 +17,6 @@ open import Group.DefHom
 Group homomorphism preserves identity element.
 
 ```
-open Group {{...}}
-
 propopsition-4 : {G H : 𝓤 ̇}
   {{_ : Group G}} {{_ : Group H}}
   → (φ : G → H)
