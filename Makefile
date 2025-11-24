@@ -3,7 +3,8 @@ FILES := Group.Def Group.Basic Group.DefHom Group.HomBasic
 
 default: $(FILES:%=html/%.html)
 	cp html/Agda.css _build/
-	rm _tmp/*.metadata.json
+	uv run fix-links.py
+	rm -f _tmp/*.metadata.json
 	raco tr build
 
 .SECONDEXPANSION:
