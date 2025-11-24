@@ -1,1 +1,5 @@
-{"description":"your site description","domain":"your domain","title":"your site title"}
+{
+  "description":"Lectures of abstract algebra",
+  "domain":"dannypsnl.github.io/AbstractAlgebra",
+  "title":"abstract algebra"
+}
