@@ -1,0 +1,3 @@
+[submodule "TypeTopology"]
+	path = TypeTopology
+	url = https://github.com/martinescardo/TypeTopology.git
