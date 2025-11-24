@@ -3,6 +3,7 @@ FILES := Group.Def Group.Basic
 
 default: $(FILES:%=html/%.html)
 	cp html/Agda.css _build/
+	rm _tmp/*.metadata.json
 	raco tr build
 
 .SECONDEXPANSION:

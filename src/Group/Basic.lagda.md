@@ -9,14 +9,12 @@ open import UF.Sets-Properties
 open import Group.Def
 ```
 
-Here we encounter some propositions
+Now we encounter some propositions
 
 ```
 module _ (G H : 𝓤 ̇) where
   open Group {{...}}
 ```
-
-Now we encounter some propositions.
 
 ## Proposition 1
 
