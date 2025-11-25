@@ -69,13 +69,20 @@ propopsition-6 {𝓤} {G} = ι , lc , is-hom
 
 這個命題說 H 是 G 的 subgroup 等價於說
 
-H 是 G 的非空子集合，且
+$H$ 是 $G$ 的非空子集合，且
 
 $$
 a \bullet b^{-1} \in H
 $$
 
-跟之前一樣，子集合寫成 inclusion 函數
+下面只證明這個條件可以推出
+
+1. $H$ 是一個群
+2. $H$ 是 $G$ 的子群
+
+因為反過來非常明顯：一個群本身當然是封閉的。
+
+> 跟之前一樣，子集合寫成 inclusion 函數
 
 ```
 propopsition-7 : {G H : 𝓤 ̇} {{∈G : Group G}}
