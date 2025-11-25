@@ -7,3 +7,4 @@
 @transclude{Group.DefHom}
 @transclude{Group.HomBasic}
 @transclude{Group.DefSubgroup}
+@transclude{Group.SubgroupBasic}

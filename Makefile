@@ -1,6 +1,6 @@
 TITLE=Abstract Algebra
 FILES := Group.Def Group.Basic Group.DefHom Group.HomBasic \
-	Group.DefSubgroup
+	Group.DefSubgroup Group.SubgroupBasic
 
 default: $(FILES:%=html/%.html)
 	cp html/Agda.css _build/
