@@ -19,16 +19,14 @@ open import Group.DefSubgroup
 
 ```
 trivial-group : Group (𝟙 {𝓤})
-trivial-group = record
-  { size = props-are-sets 𝟙-is-prop
-  ; _∙_ = λ _ _ → ⋆
-  ; ∙-assoc = λ _ _ _ → refl
-  ; e = ⋆
-  ; neu-l = λ _ → refl
-  ; neu-r = λ _ → refl
-  ; _⁻¹ = λ _ → ⋆
-  ; cancel = λ {_} → refl , refl
-  }
+trivial-group .size = props-are-sets 𝟙-is-prop
+trivial-group ._∙_ = λ _ _ → ⋆
+trivial-group .∙-assoc = λ _ _ _ → refl
+trivial-group .e = ⋆
+trivial-group .neu-l = λ _ → refl
+trivial-group .neu-r = λ _ → refl
+trivial-group ._⁻¹ = λ _ → ⋆
+trivial-group .cancel = refl , refl
 ```
 
 現在我們可以回到證明，因為 `IsSubgroup` 是一個 Sigma 類型，所以我們需要提出一個 map $\iota$，然後證明這個 map 是 inclusion 而且是 group homomorphism。
