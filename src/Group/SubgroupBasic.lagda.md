@@ -2,11 +2,13 @@
 module Group.SubgroupBasic where
 
 open import MLTT.Spartan renaming (_⁻¹ to sym; _∙_ to concat)
+open import UF.Sets
 open import UF.Subsingletons
 open import UF.Subsingletons-Properties
 
 open import Group.Def
 open Group {{...}}
+open import Group.Basic
 open import Group.DefHom
 open import Group.DefSubgroup
 ```
@@ -61,4 +63,157 @@ propopsition-6 {𝓤} {G} = ι , lc , is-hom
     e ＝⟨ sym (neu-l e) ⟩
     e ∙ e ＝⟨ refl ⟩
     (ι ⋆) ∙ (ι ⋆) ∎
+```
+
+## Propopsition 7
+
+這個命題說 H 是 G 的 subgroup 等價於說
+
+H 是 G 的非空子集合，且
+
+$$
+a \bullet b^{-1} \in H
+$$
+
+跟之前一樣，子集合寫成 inclusion 函數
+
+```
+propopsition-7 : {G H : 𝓤 ̇} {{∈G : Group G}}
+  → (i : H → G)
+  → left-cancellable i
+  → is-set H
+```
+
+怎麼表達 `H` 不是空集呢？只要說存在一個元素就好
+
+```
+  → (h : H)
+  → (∀ (a b : G) → Sigma H λ y → a ∙ b ⁻¹ ＝ i y )
+  → Sigma (Group H) λ is-group → IsSubgroup {𝓤} H G {{is-group}}
+propopsition-7 {𝓤}{G}{H} {{∈G}} i inclusion H-is-set h cond = H-is-group , i , inclusion , is-hom
+  where
+  I : Sigma H λ y → i h ∙ i h ⁻¹ ＝ i y
+  I = cond (i h) (i h)
+  eH : H
+  eH = I .pr₁
+  prop-eH : i h ∙ i h ⁻¹ ＝ i eH
+  prop-eH = I .pr₂
+  eH-is-identity : i eH ＝ e
+  eH-is-identity = concat (sym prop-eH) (cancel .pr₂)
+
+  II : (a b : H) → Sigma H λ y → i a ∙ i b ⁻¹ ⁻¹ ＝ i y
+  II a b = cond (i a) (i b ⁻¹)
+
+  III : (a : H) → Sigma H λ y → i eH ∙ i a ⁻¹ ＝ i y
+  III a = cond (i eH) (i a)
+
+  inv-inv : (a : G) → a ⁻¹ ⁻¹ ＝ a
+  inv-inv a = propopsition-2 F S
+    where
+    F : a ⁻¹ ∙ a ⁻¹ ⁻¹ ＝ e
+    F = cancel .pr₂
+    S : a ⁻¹ ∙ a ＝ e
+    S = cancel .pr₁
+
+  H-is-group : Group H
+  H-is-group .size = H-is-set
+  H-is-group ._∙_ a b = II a b .pr₁
+  H-is-group .∙-assoc x y z = inclusion VII
+    where
+    IV : Sigma H λ xy → i x ∙ i y ⁻¹ ⁻¹ ＝ i xy
+    IV = II x y
+    xy = IV .pr₁
+    Hxy : i x ∙ i y ⁻¹ ⁻¹ ＝ i xy
+    Hxy = IV .pr₂
+    V : Sigma H λ yz → i y ∙ i z ⁻¹ ⁻¹ ＝ i yz
+    V = II y z
+    yz = V .pr₁
+    Hyz : i y ∙ i z ⁻¹ ⁻¹ ＝ i yz
+    Hyz = V .pr₂
+    left = II xy z .pr₁
+    right = II x yz .pr₁
+    help1 = II xy z .pr₂
+    help2 = II x yz .pr₂
+    mid : i xy ∙ i z ⁻¹ ⁻¹ ＝ i x ∙ i yz ⁻¹ ⁻¹
+    mid =
+      i xy ∙ i z ⁻¹ ⁻¹        ＝⟨ ap (i xy ∙_) (inv-inv (i z)) ⟩
+      i xy ∙ i z              ＝⟨ ap (_∙ i z) (sym Hxy) ⟩
+      i x ∙ i y ⁻¹ ⁻¹ ∙ i z   ＝⟨ ap (λ y → i x ∙ y ∙ i z) (inv-inv (i y)) ⟩
+      i x ∙ i y ∙ i z         ＝⟨ ap (i x ∙ i y ∙_) (sym (inv-inv (i z))) ⟩
+      i x ∙ i y ∙ i z ⁻¹ ⁻¹   ＝⟨ ∙-assoc (i x) (i y) (i z ⁻¹ ⁻¹) ⟩
+      i x ∙ (i y ∙ i z ⁻¹ ⁻¹) ＝⟨ ap (i x ∙_) Hyz ⟩
+      i x ∙ i yz              ＝⟨ ap (i x ∙_) (sym (inv-inv (i yz))) ⟩
+      i x ∙ i yz ⁻¹ ⁻¹ ∎
+    VII : i left ＝ i right
+    VII = concat (sym help1) (concat mid help2)
+  H-is-group .e = eH
+  H-is-group .neu-l x = inclusion VI
+    where
+    IV : Sigma H λ y → i eH ∙ i x ⁻¹ ⁻¹ ＝ i y
+    IV = II eH x
+    y = IV .pr₁
+    V : i eH ∙ i x ⁻¹ ⁻¹ ＝ i y
+    V = IV .pr₂
+    VI : i y ＝ i x
+    VI =
+      i y              ＝⟨ sym V ⟩
+      i eH ∙ i x ⁻¹ ⁻¹ ＝⟨ ap (_∙ i x ⁻¹ ⁻¹) eH-is-identity ⟩
+      e ∙ i x ⁻¹ ⁻¹    ＝⟨ neu-l (i x ⁻¹ ⁻¹) ⟩
+      i x ⁻¹ ⁻¹        ＝⟨ inv-inv (i x) ⟩
+      i x ∎
+  H-is-group .neu-r x = inclusion VI
+    where
+    IV : Sigma H λ y → i x ∙ i eH ⁻¹ ⁻¹ ＝ i y
+    IV = II x eH
+    y = IV .pr₁
+    V : i x ∙ i eH ⁻¹ ⁻¹ ＝ i y
+    V = IV .pr₂
+    VI : i y ＝ i x
+    VI =
+      i y              ＝⟨ sym V ⟩
+      i x ∙ i eH ⁻¹ ⁻¹ ＝⟨ ap (i x ∙_) (inv-inv (i eH)) ⟩
+      i x ∙ i eH       ＝⟨ ap (i x ∙_) eH-is-identity ⟩
+      i x ∙ e          ＝⟨ neu-r (i x) ⟩
+      i x ∎
+  H-is-group ._⁻¹ x = III x .pr₁
+  H-is-group .cancel {x} = left , right
+    where
+    x' = III x .pr₁
+    Hx' : i eH ∙ i x ⁻¹ ＝ i x'
+    Hx' = III x .pr₂
+
+    l = II x' x .pr₁
+    Hl : i x' ∙ i x ⁻¹ ⁻¹ ＝ i l
+    Hl = II x' x .pr₂
+    step-left : i x' ∙ i x ⁻¹ ⁻¹ ＝ i eH
+    step-left =
+      i x' ∙ i x ⁻¹ ⁻¹ ＝⟨ ap (_∙ i x ⁻¹ ⁻¹) (sym Hx') ⟩
+      i eH ∙ i x ⁻¹ ∙ i x ⁻¹ ⁻¹ ＝⟨ ∙-assoc (i eH) (i x ⁻¹) (i x ⁻¹ ⁻¹) ⟩
+      i eH ∙ (i x ⁻¹ ∙ i x ⁻¹ ⁻¹) ＝⟨ ap (i eH ∙_) (cancel .pr₂) ⟩
+      i eH ∙ e ＝⟨ neu-r (i eH) ⟩
+      i eH ∎
+
+    r = II x x' .pr₁
+    Hr : i x ∙ i x' ⁻¹ ⁻¹ ＝ i r
+    Hr = II x x' .pr₂
+    step-right : i x ∙ i x' ⁻¹ ⁻¹ ＝ i eH
+    step-right =
+      i x ∙ i x' ⁻¹ ⁻¹ ＝⟨ ap (i x ∙_) (inv-inv (i x')) ⟩
+      i x ∙ i x' ＝⟨ ap (i x ∙_) (sym Hx') ⟩
+      i x ∙ (i eH ∙ i x ⁻¹) ＝⟨ ap (i x ∙_) (ap (_∙ i x ⁻¹) eH-is-identity) ⟩
+      i x ∙ (e ∙ i x ⁻¹) ＝⟨ ap (i x ∙_) (neu-l (i x ⁻¹)) ⟩
+      i x ∙ i x ⁻¹ ＝⟨ cancel .pr₂ ⟩
+      e ＝⟨ sym eH-is-identity ⟩
+      i eH ∎
+
+    left : (l ＝ eH)
+    left = inclusion (concat (sym Hl) step-left)
+    right : (II x x' .pr₁ ＝ eH)
+    right = inclusion (concat (sym Hr) step-right)
+
+  is-hom : IsGroupHomomorphism H G {{H-is-group}} i
+  is-hom x y =
+    i (II x y .pr₁) ＝⟨ sym (II x y .pr₂) ⟩
+    i x ∙ i y ⁻¹ ⁻¹ ＝⟨ ap (i x ∙_) (inv-inv (i y)) ⟩
+    i x ∙ i y ∎
 ```
