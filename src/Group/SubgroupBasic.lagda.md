@@ -60,9 +60,7 @@ propopsition-6 {𝓤} {G} = ι , lc , is-hom
   is-hom : IsGroupHomomorphism 𝟙 G ι
   is-hom ⋆ ⋆ =
     ι (⋆ ∙ ⋆) ＝⟨ refl ⟩
-    e ＝⟨ sym (cancel .pr₁) ⟩
-    (ι ⋆)⁻¹ ∙ (ι ⋆) ＝⟨ refl ⟩
-    e ⁻¹ ∙ (ι ⋆) ＝⟨ ap (_∙ (ι ⋆)) (concat ((sym (neu-r (e ⁻¹)))) (cancel .pr₁)) ⟩
-    e ∙ (ι ⋆) ＝⟨ refl ⟩
+    e ＝⟨ sym (neu-l e) ⟩
+    e ∙ e ＝⟨ refl ⟩
     (ι ⋆) ∙ (ι ⋆) ∎
 ```
