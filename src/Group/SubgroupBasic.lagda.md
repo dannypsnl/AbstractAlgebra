@@ -2,14 +2,12 @@
 module Group.SubgroupBasic where
 
 open import MLTT.Spartan renaming (_⁻¹ to sym; _∙_ to concat)
-open import UF.Sets
 open import UF.Subsingletons
 open import UF.Subsingletons-Properties
 
 open import Group.Def
 open Group {{...}}
 open import Group.DefHom
-open import Group.HomBasic
 open import Group.DefSubgroup
 ```
 
