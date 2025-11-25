@@ -6,3 +6,4 @@
 @transclude{Group.Basic}
 @transclude{Group.DefHom}
 @transclude{Group.HomBasic}
+@transclude{Group.DefSubgroup}
