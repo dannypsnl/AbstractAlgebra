@@ -15,8 +15,8 @@ uv run serve.py
 
 依賴有
 
-1. Racket
-2. tr-notes: https://github.com/dannypsnl/tr
-3. agda
+1. tr-notes: https://github.com/dannypsnl/tr
+2. agda
+3. uv
 
-等。
+因為公式都由 agda、pandoc 這邊處理了，倒是不用裝 MacTex、dvisvgm 這些本來 tr-notes 會用到的部分。
