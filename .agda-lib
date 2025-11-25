@@ -1,4 +1,0 @@
-name: AbstractAlgebra
-depend:
-include: src TypeTopology/source
-flags:
