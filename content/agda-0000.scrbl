@@ -1,6 +1,6 @@
 @title{Agda 小知識}
 
-@p{在我們開始之前需要知道怎麼閱讀 agda 的證明，我使用的是由 Martin Escardo 維護的 @external["https://github.com/martinescardo/TypeTopology"]{TypeTopology} 程式庫，下面經常會用到的是等式證明，寫成形式}
+@p{在我們開始之前需要知道怎麼閱讀 agda 的證明，這裡使用的是由 Martin Escardo 維護的 @external["https://github.com/martinescardo/TypeTopology"]{TypeTopology} 程式庫，下面經常會用到的是等式證明，寫成形式}
 
 @pre{
 A ＝⟨ B ⟩ C ∎
