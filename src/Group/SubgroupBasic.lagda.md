@@ -1,7 +1,7 @@
 ```
 module Group.SubgroupBasic where
 
-open import MLTT.Spartan renaming (_⁻¹ to sym; _∙_ to concat)
+open import MLTT.Spartan renaming (_⁻¹ to sym; _∙_ to _then_)
 open import UF.Sets
 open import UF.Subsingletons
 open import UF.Subsingletons-Properties
@@ -106,7 +106,7 @@ propopsition-7 {𝓤}{G}{H} {{∈G}} i inclusion H-is-set h cond = H-is-group , 
   prop-eH : i h ∙ i h ⁻¹ ＝ i eH
   prop-eH = I .pr₂
   eH-is-identity : i eH ＝ e
-  eH-is-identity = concat (sym prop-eH) (cancel .pr₂)
+  eH-is-identity = (sym prop-eH) then (cancel .pr₂)
 
   II : (a b : H) → Sigma H λ y → i a ∙ i b ⁻¹ ⁻¹ ＝ i y
   II a b = cond (i a) (i b ⁻¹)
@@ -152,7 +152,7 @@ propopsition-7 {𝓤}{G}{H} {{∈G}} i inclusion H-is-set h cond = H-is-group , 
       i x ∙ i yz              ＝⟨ ap (i x ∙_) (sym (inv-inv (i yz))) ⟩
       i x ∙ i yz ⁻¹ ⁻¹ ∎
     VII : i left ＝ i right
-    VII = concat (sym help1) (concat mid help2)
+    VII = (sym help1) then mid then help2
   H-is-group .e = eH
   H-is-group .neu-l x = inclusion VI
     where
@@ -214,9 +214,9 @@ propopsition-7 {𝓤}{G}{H} {{∈G}} i inclusion H-is-set h cond = H-is-group , 
       i eH ∎
 
     left : (l ＝ eH)
-    left = inclusion (concat (sym Hl) step-left)
+    left = inclusion ((sym Hl) then step-left)
     right : (II x x' .pr₁ ＝ eH)
-    right = inclusion (concat (sym Hr) step-right)
+    right = inclusion ((sym Hr) then step-right)
 
   is-hom : IsGroupHomomorphism H G {{H-is-group}} i
   is-hom x y =

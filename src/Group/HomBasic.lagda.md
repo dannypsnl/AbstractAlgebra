@@ -1,7 +1,7 @@
 ```
 module Group.HomBasic where
 
-open import MLTT.Spartan renaming (_⁻¹ to sym; _∙_ to concat)
+open import MLTT.Spartan renaming (_⁻¹ to sym; _∙_ to _then_)
 open import UF.Base
 open import UF.Sets
 open import UF.Sets-Properties
@@ -80,11 +80,11 @@ propopsition-5 φ is-hom g = (propopsition-3 .pr₁) V
        e ∎
 
   III : φ (g ⁻¹) ∙ φ g ＝ e
-  III = concat (sym I) II
+  III = (sym I) then II
 
   VI : (φ g) ⁻¹ ∙ (φ g) ＝ e
   VI = cancel .pr₁
 
   V : φ (g ⁻¹) ∙ φ g ＝ (φ g) ⁻¹ ∙ (φ g)
-  V = concat III (sym VI)
+  V = III then (sym VI)
 ```
