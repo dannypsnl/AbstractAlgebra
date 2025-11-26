@@ -1,4 +1,3 @@
-TITLE=Abstract Algebra
 FILES := Group.Def Group.Basic Group.DefHom Group.HomBasic \
 	Group.DefSubgroup Group.SubgroupBasic
 
