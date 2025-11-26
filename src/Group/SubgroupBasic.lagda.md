@@ -194,10 +194,10 @@ propopsition-7 {𝓤}{G}{H} {{∈G}} i inclusion H-is-set h cond = H-is-group , 
     Hl = II x' x .pr₂
     step-left : i x' ∙ i x ⁻¹ ⁻¹ ＝ i eH
     step-left =
-      i x' ∙ i x ⁻¹ ⁻¹ ＝⟨ ap (_∙ i x ⁻¹ ⁻¹) (sym Hx') ⟩
-      i eH ∙ i x ⁻¹ ∙ i x ⁻¹ ⁻¹ ＝⟨ ∙-assoc (i eH) (i x ⁻¹) (i x ⁻¹ ⁻¹) ⟩
+      i x' ∙ i x ⁻¹ ⁻¹            ＝⟨ ap (_∙ i x ⁻¹ ⁻¹) (sym Hx') ⟩
+      i eH ∙ i x ⁻¹ ∙ i x ⁻¹ ⁻¹   ＝⟨ ∙-assoc (i eH) (i x ⁻¹) (i x ⁻¹ ⁻¹) ⟩
       i eH ∙ (i x ⁻¹ ∙ i x ⁻¹ ⁻¹) ＝⟨ ap (i eH ∙_) (cancel .pr₂) ⟩
-      i eH ∙ e ＝⟨ neu-r (i eH) ⟩
+      i eH ∙ e                    ＝⟨ neu-r (i eH) ⟩
       i eH ∎
 
     r = II x x' .pr₁
@@ -205,12 +205,12 @@ propopsition-7 {𝓤}{G}{H} {{∈G}} i inclusion H-is-set h cond = H-is-group , 
     Hr = II x x' .pr₂
     step-right : i x ∙ i x' ⁻¹ ⁻¹ ＝ i eH
     step-right =
-      i x ∙ i x' ⁻¹ ⁻¹ ＝⟨ ap (i x ∙_) (inv-inv (i x')) ⟩
-      i x ∙ i x' ＝⟨ ap (i x ∙_) (sym Hx') ⟩
+      i x ∙ i x' ⁻¹ ⁻¹      ＝⟨ ap (i x ∙_) (inv-inv (i x')) ⟩
+      i x ∙ i x'            ＝⟨ ap (i x ∙_) (sym Hx') ⟩
       i x ∙ (i eH ∙ i x ⁻¹) ＝⟨ ap (i x ∙_) (ap (_∙ i x ⁻¹) eH-is-identity) ⟩
-      i x ∙ (e ∙ i x ⁻¹) ＝⟨ ap (i x ∙_) (neu-l (i x ⁻¹)) ⟩
-      i x ∙ i x ⁻¹ ＝⟨ cancel .pr₂ ⟩
-      e ＝⟨ sym eH-is-identity ⟩
+      i x ∙ (e ∙ i x ⁻¹)    ＝⟨ ap (i x ∙_) (neu-l (i x ⁻¹)) ⟩
+      i x ∙ i x ⁻¹          ＝⟨ cancel .pr₂ ⟩
+      e                     ＝⟨ sym eH-is-identity ⟩
       i eH ∎
 
     left : (l ＝ eH)
