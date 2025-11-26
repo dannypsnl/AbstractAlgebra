@@ -6,3 +6,30 @@
 @blockquote{請用 @kbd{Cmd + K} 或是 @kbd{Ctrl + K} 查詢內容}
 @p{有興趣嘗試證明器的讀者更是可以試著 fork 專案 @external{https://github.com/dannypsnl/AbstractAlgebra} 練習更多的延伸命題，用 Agda 學習抽象代數。}
 @transclude[#:open #f]{alg-0000}
+
+@footer{
+  @address['class: "address-block"]{
+    @ul['aria-label: "About" 'role: "list"]{
+      @li{
+        @span['aria-hidden: "true"]{訂閱}
+        @a['href: "/rss.xml" 'aria-label: "rss"]{
+          @svg[
+            'class: "prefix-icon" 'width: 16 'height: 16
+            'viewBox: "0 0 24 24"
+          ]{
+            @path['d: "M3 3c9.941 0 18 8.059 18 18h-3c0-8.284-6.716-15-15-15V3Zm0 7c6.075 0 11 4.925 11 11h-3a8 8 0 0 0-8-8v-3Zm0 7a4 4 0 0 1 4 4H3v-4Z"]
+          }
+        }
+        @span['aria-hidden: "true"]{RSS 可以看到更新進度}
+      }
+    }
+  }
+  @div['class: "copyright-container"]{
+    @div['class: "copyright"]{Copyright © Content is available under @a['href: "https://choosealicense.com/licenses/cc0-1.0/"]{CC0 1.0 Universal} unless otherwise noted.}
+    @div['class: "cc-badge"]{
+      @a['ref: "license" 'href: "https://choosealicense.com/licenses/cc0-1.0/"]{
+        @img['alt: "Creative Commons License" 'src: "https://licensebuttons.net/l/zero/1.0/88x31.png"]
+      }
+    }
+  }
+}
