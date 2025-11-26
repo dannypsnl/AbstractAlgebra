@@ -11,5 +11,5 @@ open import Group.DefHom
 
 ```
 IsSubgroup : {𝓤 : Universe} (H G : 𝓤 ̇) {{_ : Group H}} {{_ : Group G}} → 𝓤 ̇
-IsSubgroup H G = Sigma (H → G) λ i → left-cancellable i × IsGroupHomomorphism H G i
+IsSubgroup H G = Σ i ꞉ (H → G) , left-cancellable i × IsGroupHomomorphism H G i
 ```

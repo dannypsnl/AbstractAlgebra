@@ -95,11 +95,11 @@ propopsition-7 : {G H : 𝓤 ̇} {{∈G : Group G}}
 
 ```
   → (h : H)
-  → (∀ (a b : G) → Sigma H λ y → a ∙ b ⁻¹ ＝ i y )
-  → Sigma (Group H) λ is-group → IsSubgroup {𝓤} H G {{is-group}}
+  → (∀ (a b : G) → Σ y ꞉ H , a ∙ b ⁻¹ ＝ i y )
+  → Σ is-grp ꞉ Group H , IsSubgroup {𝓤} H G {{is-grp}}
 propopsition-7 {𝓤}{G}{H} {{∈G}} i inclusion H-is-set h cond = H-is-group , i , inclusion , is-hom
   where
-  I : Sigma H λ y → i h ∙ i h ⁻¹ ＝ i y
+  I : Σ y ꞉ H , i h ∙ i h ⁻¹ ＝ i y
   I = cond (i h) (i h)
   eH : H
   eH = I .pr₁
@@ -108,10 +108,10 @@ propopsition-7 {𝓤}{G}{H} {{∈G}} i inclusion H-is-set h cond = H-is-group , 
   eH-is-identity : i eH ＝ e
   eH-is-identity = (sym prop-eH) then (cancel .pr₂)
 
-  II : (a b : H) → Sigma H λ y → i a ∙ i b ⁻¹ ⁻¹ ＝ i y
+  II : (a b : H) → Σ y ꞉ H , i a ∙ i b ⁻¹ ⁻¹ ＝ i y
   II a b = cond (i a) (i b ⁻¹)
 
-  III : (a : H) → Sigma H λ y → i eH ∙ i a ⁻¹ ＝ i y
+  III : (a : H) → Σ y ꞉ H , i eH ∙ i a ⁻¹ ＝ i y
   III a = cond (i eH) (i a)
 
   inv-inv : (a : G) → a ⁻¹ ⁻¹ ＝ a
@@ -127,12 +127,12 @@ propopsition-7 {𝓤}{G}{H} {{∈G}} i inclusion H-is-set h cond = H-is-group , 
   H-is-group ._∙_ a b = II a b .pr₁
   H-is-group .∙-assoc x y z = inclusion VII
     where
-    IV : Sigma H λ xy → i x ∙ i y ⁻¹ ⁻¹ ＝ i xy
+    IV : Σ xy ꞉ H , i x ∙ i y ⁻¹ ⁻¹ ＝ i xy
     IV = II x y
     xy = IV .pr₁
     Hxy : i x ∙ i y ⁻¹ ⁻¹ ＝ i xy
     Hxy = IV .pr₂
-    V : Sigma H λ yz → i y ∙ i z ⁻¹ ⁻¹ ＝ i yz
+    V : Σ yz ꞉ H , i y ∙ i z ⁻¹ ⁻¹ ＝ i yz
     V = II y z
     yz = V .pr₁
     Hyz : i y ∙ i z ⁻¹ ⁻¹ ＝ i yz
@@ -156,7 +156,7 @@ propopsition-7 {𝓤}{G}{H} {{∈G}} i inclusion H-is-set h cond = H-is-group , 
   H-is-group .e = eH
   H-is-group .neu-l x = inclusion VI
     where
-    IV : Sigma H λ y → i eH ∙ i x ⁻¹ ⁻¹ ＝ i y
+    IV : Σ y ꞉ H , i eH ∙ i x ⁻¹ ⁻¹ ＝ i y
     IV = II eH x
     y = IV .pr₁
     V : i eH ∙ i x ⁻¹ ⁻¹ ＝ i y
@@ -170,7 +170,7 @@ propopsition-7 {𝓤}{G}{H} {{∈G}} i inclusion H-is-set h cond = H-is-group , 
       i x ∎
   H-is-group .neu-r x = inclusion VI
     where
-    IV : Sigma H λ y → i x ∙ i eH ⁻¹ ⁻¹ ＝ i y
+    IV : Σ y ꞉ H , i x ∙ i eH ⁻¹ ⁻¹ ＝ i y
     IV = II x eH
     y = IV .pr₁
     V : i x ∙ i eH ⁻¹ ⁻¹ ＝ i y
