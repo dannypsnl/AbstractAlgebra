@@ -30,7 +30,7 @@ propopsition-1 {G}{_} {h} h-is-identity =
 
 ## Proposition 2
 
-如果 $h_1$ and $h_2$ 的反元素都是 $g$，那 $h_1 = h_2$
+如果 $h_1$ and $h_2$ 的反元素都是 $g$，那 $h_1 = h_2$。或者我們會說反元素是唯一的，跟上面的命題的意義類似。
 
 ```
 propopsition-2 : {G : 𝓤 ̇} {{_ : Group G}} {g h1 h2 : G} → (g ∙ h1 ＝ e) → (g ∙ h2 ＝ e) → h1 ＝ h2
@@ -48,7 +48,7 @@ propopsition-2 {G}{_} {g}{h1}{h2} fact1 fact2 =
 
 ## Proposition 3
 
-這個命題在說每個元素都可以取消，這是一個非常好用的事實，不過我們先解釋一下它的具體描述
+這個命題在說每個元素都可以取消，這是一個非常好用的事實，而且完全不必感到陌生，我等一下再解釋這點。我們先來看它的具體描述
 
 1. 如果 $g \bullet a = h \bullet a$，則 $g = h$
 2. 如果 $a \bullet g = a \bullet h$，則 $g = h$
@@ -79,3 +79,5 @@ propopsition-3 {G}{_} {g}{h}{a} = I , II
     e ∙ h ＝⟨ neu-l h ⟩
     h ∎
 ```
+
+為什麼不必對這個命題感到陌生呢？因為這其實是我們日常也很容易遇到的算術事實：如果 $2 x = 2 y$ 那 $x = y$。
