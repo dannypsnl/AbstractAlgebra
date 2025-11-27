@@ -15,5 +15,5 @@ html/%.html: html/%.md
 	pandoc -f markdown -t html $< > $@
 	rm -f _tmp/$*.metadata.json
 
-deploy:
+deploy: default
 	cd _build; vercel --prod
