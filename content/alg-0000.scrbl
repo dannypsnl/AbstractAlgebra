@@ -8,3 +8,5 @@
 @transclude{Group.HomBasic}
 @transclude{Group.DefSubgroup}
 @transclude{Group.SubgroupBasic}
+@transclude{Group.DefKer}
+@transclude{Group.KerBasic}

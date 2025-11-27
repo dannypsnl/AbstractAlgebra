@@ -1,5 +1,6 @@
 FILES := Group.Def Group.Basic Group.DefHom Group.HomBasic \
-	Group.DefSubgroup Group.SubgroupBasic
+	Group.DefSubgroup Group.SubgroupBasic \
+	Group.DefKer Group.KerBasic
 
 default: $(FILES:%=html/%.html)
 	@uv run fix-links.py

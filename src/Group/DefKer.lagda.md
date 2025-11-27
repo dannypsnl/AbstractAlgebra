@@ -1,22 +1,16 @@
 ```
 module Group.DefKer where
 
-open import MLTT.Spartan renaming (_⁻¹ to sym; _∙_ to _then_)
-open import UF.Equiv
+open import MLTT.Spartan
 
 open import Group.Def
 open Group {{...}}
 open import Group.DefHom
 ```
 
-```
-Ker : {𝓤 : Universe} (H G : 𝓤 ̇) {{_ : Group H}} {{_ : Group G}} (i : H → G) → 𝓤 ̇
-Ker H G i = Σ h ꞉ H , i h ＝ e
+一個 Kernel 是指一個 group homomorphism 的 domain 的子集裡面，那些 maps 到 codomain 的 identity 的元素，所以這裡定義成
 
-a : {H G : 𝓤 ̇} {{_ : Group H}} {{_ : Group G}}
-  (i : H → G)
-  → IsGroupHomomorphism H G i
-  → left-cancellable i
-  → (Ker H G i) ≃ 𝟙 {𝓤}
-a = {!   !}
+```
+Ker : {𝓤 : Universe} (H G : 𝓤 ̇) {{_ : Group H}} {{_ : Group G}} (i : H → G) → IsGroupHomomorphism H G i → 𝓤 ̇
+Ker H G i _ = Σ h ꞉ H , i h ＝ e
 ```
