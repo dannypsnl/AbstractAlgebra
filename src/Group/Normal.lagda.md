@@ -1,0 +1,48 @@
+```agda
+module Group.Normal where
+
+open import MLTT.Spartan renaming (_⁻¹ to sym; _∙_ to _then_)
+open import UF.Base
+open import UF.Sets
+open import UF.Sets-Properties
+
+open import Group.Def
+open Group {{...}}
+open import Group.DefHom
+open import Group.DefKer
+open import Group.HomBasic
+```
+
+如果 $G$ 的子群 $N$ 對所有 $g \in G$ 跟 $n \in N$ 滿足以下條件
+
+$$
+g \bullet h \bullet g^{-1} \in N
+$$
+
+我們就說 $N$ 是 Normal subgroup。
+
+## Proposition 9
+
+> 為了避免複雜的編碼，下面直接根據需求定義。
+
+這個命題是說，任何 $\varphi : H → G$ 的 Kernel 都是 $H$ 的 normal subgroup。
+所以我們想要證明的是對於任何屬於 Kernel 的元素 $h$，元素 $g \bullet h \bullet g^{-1}$ 也屬於 Kernel。
+
+```
+_∈Ker[_,_] : {H G : 𝓤 ̇} {{∈H : Group H}} {{∈G : Group G}} (h : H) → (φ : H → G) → IsGroupHomomorphism H G φ → 𝓤 ̇
+h ∈Ker[ φ , is-hom ] = φ h ＝ e
+
+proposition-9 : {H G : 𝓤 ̇} {{∈H : Group H}} {{∈G : Group G}}
+  (f : H → G) → (is-hom : IsGroupHomomorphism H G f)
+  → ((h : H) → h ∈Ker[ f , is-hom ] → (g : H) → g ∙ h ∙ g ⁻¹ ∈Ker[ f , is-hom ])
+proposition-9 {𝓤} {H}{G}{{∈H}}{{∈G}} f is-hom h in-ker g = I
+  where
+  I : f (g ∙ h ∙ g ⁻¹) ＝ e
+  I = f (g ∙ h ∙ g ⁻¹)     ＝⟨ is-hom (g ∙ h) (g ⁻¹) ⟩
+      f (g ∙ h) ∙ f (g ⁻¹) ＝⟨ ap (_∙ f (g ⁻¹)) (is-hom g h)  ⟩
+      f g ∙ f h ∙ f (g ⁻¹) ＝⟨ ap (f g ∙ f h ∙_) (proposition-5 f is-hom g) ⟩
+      f g ∙ f h ∙ f g ⁻¹   ＝⟨ ap (λ x → f g ∙ x ∙ f g ⁻¹) in-ker ⟩
+      f g ∙ e ∙ f g ⁻¹     ＝⟨ ap (_∙ f g ⁻¹) (neu-r (f g)) ⟩
+      f g ∙ f g ⁻¹         ＝⟨ cancel .pr₂ ⟩
+      e ∎
+```

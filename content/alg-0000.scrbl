@@ -10,3 +10,4 @@
 @transclude{Group.SubgroupBasic}
 @transclude{Group.DefKer}
 @transclude{Group.KerBasic}
+@transclude{Group.Normal}
