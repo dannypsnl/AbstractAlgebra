@@ -59,9 +59,9 @@ proposition-6 {𝓤} {G} = ι , lc , is-hom
 ```
   is-hom : IsGroupHomomorphism 𝟙 G ι
   is-hom ⋆ ⋆ =
-    ι (⋆ ∙ ⋆) ＝⟨ refl ⟩
+    ι (⋆ ∙ ⋆) ＝⟨by-definition⟩
     e         ＝⟨ sym (neu-l e) ⟩
-    e ∙ e     ＝⟨ refl ⟩
+    e ∙ e     ＝⟨by-definition⟩
     (ι ⋆) ∙ (ι ⋆) ∎
 ```
 
