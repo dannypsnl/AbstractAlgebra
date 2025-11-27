@@ -21,11 +21,11 @@ Group homomorphism 保留單位元素，也就是說 $\varphi(e_G) = e_H$。
 > 注意到雖然我們在數學式裡面用下標 $_G$、$_H$ 區分，但在 Agda 裡面它自己就知道這件事，所以不用特別寫出
 
 ```
-propopsition-4 : {G H : 𝓤 ̇} {{∈G : Group G}} {{∈H : Group H}}
+proposition-4 : {G H : 𝓤 ̇} {{∈G : Group G}} {{∈H : Group H}}
   → (φ : G → H)
   → IsGroupHomomorphism G H φ
   → φ e ＝ e
-propopsition-4 φ is-hom = VI
+proposition-4 φ is-hom = VI
   where
   I : e ⁻¹ ＝ e
   I = e ⁻¹ ＝⟨ sym (neu-r (e ⁻¹)) ⟩
@@ -56,7 +56,7 @@ propopsition-4 φ is-hom = VI
 
 ```
   VI : (φ e) ＝ e
-  VI = (propopsition-3 .pr₁) III
+  VI = (proposition-3 .pr₁) III
 ```
 
 ## Proposition 5
@@ -64,19 +64,19 @@ propopsition-4 φ is-hom = VI
 Group homomorphism 保留反元素，也就是說 $\varphi(g^{-1}) = \varphi(g)^{-1}$ 對所有 $g \in G$ 成立。
 
 ```
-propopsition-5 : {G H : 𝓤 ̇} {{∈G : Group G}} {{∈H : Group H}}
+proposition-5 : {G H : 𝓤 ̇} {{∈G : Group G}} {{∈H : Group H}}
   → (φ : G → H)
   → IsGroupHomomorphism G H φ
   → (g : G)
   → φ (g ⁻¹) ＝ (φ g) ⁻¹
-propopsition-5 φ is-hom g = (propopsition-3 .pr₁) V
+proposition-5 φ is-hom g = (proposition-3 .pr₁) V
   where
   I : φ (g ⁻¹ ∙ g) ＝ φ (g ⁻¹) ∙ φ g
   I = is-hom (g ⁻¹) g
 
   II : φ (g ⁻¹ ∙ g) ＝ e
   II = φ (g ⁻¹ ∙ g) ＝⟨ ap (λ x → φ x) (cancel .pr₁) ⟩
-       φ e ＝⟨ propopsition-4 φ is-hom ⟩
+       φ e ＝⟨ proposition-4 φ is-hom ⟩
        e ∎
 
   III : φ (g ⁻¹) ∙ φ g ＝ e

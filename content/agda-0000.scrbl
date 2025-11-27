@@ -9,7 +9,7 @@ A ＝⟨ B ⟩ C ∎
 @p{這段程式的意思是，@m{A = C}，因為 @m{B}。而每個寫好的證明，都可由其他程式引用，比如}
 
 @pre{
-propopsition-4 : {G H : 𝓤 ̇} {{∈G : Group G}} {{∈H : Group H}}
+proposition-4 : {G H : 𝓤 ̇} {{∈G : Group G}} {{∈H : Group H}}
   → (φ : G → H)
   → IsGroupHomomorphism G H φ
   → φ e ＝ e
@@ -18,8 +18,8 @@ propopsition-4 : {G H : 𝓤 ̇} {{∈G : Group G}} {{∈H : Group H}}
 @p{就可以引用}
 
 @pre{
-φ e ＝⟨ propopsition-4 φ is-hom ⟩
+φ e ＝⟨ proposition-4 φ is-hom ⟩
 e ∎
 }
 
-@p{這就是說 @m{\varphi(e_G) = e_H}，因為前面證明過的事實 @code{propopsition-4 φ is-hom}。}
+@p{這就是說 @m{\varphi(e_G) = e_H}，因為前面證明過的事實 @code{proposition-4 φ is-hom}。}

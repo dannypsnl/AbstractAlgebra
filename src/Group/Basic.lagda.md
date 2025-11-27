@@ -19,8 +19,8 @@ open Group {{...}}
 > 事實上，很酷的事情是甚至不用完全滿足單位元素條件，就如下面的證明所演示的
 
 ```
-propopsition-1 : {G : 𝓤 ̇} {{_ : Group G}} {h : G} → left-neutral h _∙_ → h ＝ e
-propopsition-1 {G}{_} {h} h-is-identity =
+proposition-1 : {G : 𝓤 ̇} {{_ : Group G}} {h : G} → left-neutral h _∙_ → h ＝ e
+proposition-1 {G}{_} {h} h-is-identity =
   h ＝⟨ sym (neu-r h) ⟩
   h ∙ e ＝⟨ h-is-identity e ⟩
   e ∎
@@ -33,8 +33,8 @@ propopsition-1 {G}{_} {h} h-is-identity =
 如果 $h_1$ and $h_2$ 的反元素都是 $g$，那 $h_1 = h_2$。或者我們會說反元素是唯一的，跟上面的命題的意義類似。
 
 ```
-propopsition-2 : {G : 𝓤 ̇} {{_ : Group G}} {g h1 h2 : G} → (g ∙ h1 ＝ e) → (g ∙ h2 ＝ e) → h1 ＝ h2
-propopsition-2 {G}{_} {g}{h1}{h2} fact1 fact2 =
+proposition-2 : {G : 𝓤 ̇} {{_ : Group G}} {g h1 h2 : G} → (g ∙ h1 ＝ e) → (g ∙ h2 ＝ e) → h1 ＝ h2
+proposition-2 {G}{_} {g}{h1}{h2} fact1 fact2 =
   h1 ＝⟨ sym (neu-l h1) ⟩
   e ∙ h1 ＝⟨ ap (_∙ h1) (sym (cancel .pr₁)) ⟩
   g ⁻¹ ∙ g ∙ h1 ＝⟨ ∙-assoc (g ⁻¹) g h1 ⟩
@@ -54,8 +54,8 @@ propopsition-2 {G}{_} {g}{h1}{h2} fact1 fact2 =
 2. 如果 $a \bullet g = a \bullet h$，則 $g = h$
 
 ```
-propopsition-3 : {G : 𝓤 ̇} {{_ : Group G}} {g h a : G} → (g ∙ a ＝ h ∙ a → g ＝ h) × (a ∙ g ＝ a ∙ h → g ＝ h)
-propopsition-3 {G}{_} {g}{h}{a} = I , II
+proposition-3 : {G : 𝓤 ̇} {{_ : Group G}} {g h a : G} → (g ∙ a ＝ h ∙ a → g ＝ h) × (a ∙ g ＝ a ∙ h → g ＝ h)
+proposition-3 {G}{_} {g}{h}{a} = I , II
   where
   I : g ∙ a ＝ h ∙ a → g ＝ h
   I fact =

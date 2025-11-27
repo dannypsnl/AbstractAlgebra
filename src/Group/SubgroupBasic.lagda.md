@@ -13,7 +13,7 @@ open import Group.DefHom
 open import Group.DefSubgroup
 ```
 
-## Propopsition 6
+## Proposition 6
 
 這個命題是說，對所有群都有一個子群是 trivial group。
 
@@ -34,9 +34,9 @@ trivial-group .cancel = refl , refl
 現在我們可以回到證明，因為 `IsSubgroup` 是一個 Sigma 類型，所以我們需要提出一個 map $\iota$，然後證明這個 map 是 inclusion 而且是 group homomorphism。
 
 ```
-propopsition-6 : {G : 𝓤 ̇} {{∈G : Group G}} {{∈𝟙 : Group 𝟙}}
+proposition-6 : {G : 𝓤 ̇} {{∈G : Group G}} {{∈𝟙 : Group 𝟙}}
   → IsSubgroup 𝟙 G
-propopsition-6 {𝓤} {G} = ι , lc , is-hom
+proposition-6 {𝓤} {G} = ι , lc , is-hom
   where
 ```
 
@@ -65,7 +65,7 @@ propopsition-6 {𝓤} {G} = ι , lc , is-hom
     (ι ⋆) ∙ (ι ⋆) ∎
 ```
 
-## Propopsition 7
+## Proposition 7
 
 這個命題說 H 是 G 的 subgroup 等價於說
 
@@ -85,7 +85,7 @@ $$
 > 跟之前一樣，子集合寫成 inclusion 函數
 
 ```
-propopsition-7 : {G H : 𝓤 ̇} {{∈G : Group G}}
+proposition-7 : {G H : 𝓤 ̇} {{∈G : Group G}}
   → (i : H → G)
   → left-cancellable i
   → is-set H
@@ -97,7 +97,7 @@ propopsition-7 : {G H : 𝓤 ̇} {{∈G : Group G}}
   → (h : H)
   → (∀ (a b : G) → Σ y ꞉ H , a ∙ b ⁻¹ ＝ i y )
   → Σ is-grp ꞉ Group H , IsSubgroup {𝓤} H G {{is-grp}}
-propopsition-7 {𝓤}{G}{H} {{∈G}} i inclusion H-is-set h cond = H-is-group , i , inclusion , is-hom
+proposition-7 {𝓤}{G}{H} {{∈G}} i inclusion H-is-set h cond = H-is-group , i , inclusion , is-hom
   where
   I : Σ y ꞉ H , i h ∙ i h ⁻¹ ＝ i y
   I = cond (i h) (i h)
@@ -115,7 +115,7 @@ propopsition-7 {𝓤}{G}{H} {{∈G}} i inclusion H-is-set h cond = H-is-group , 
   III a = cond (i eH) (i a)
 
   inv-inv : (a : G) → a ⁻¹ ⁻¹ ＝ a
-  inv-inv a = propopsition-2 F S
+  inv-inv a = proposition-2 F S
     where
     F : a ⁻¹ ∙ a ⁻¹ ⁻¹ ＝ e
     F = cancel .pr₂

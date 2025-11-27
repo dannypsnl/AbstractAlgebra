@@ -22,7 +22,7 @@ proposition-8 : {H G : 𝓤 ̇} {{∈H : Group H}} {{∈G : Group G}}
 proposition-8 {𝓤} {H}{G}{{∈H}}{{∈G}} i is-hom inclusion (h , p) = inclusion I
   where
   I : i e ＝ i h
-  I = (propopsition-4 i is-hom) then (sym p)
+  I = (proposition-4 i is-hom) then (sym p)
 ```
 
 這也順便說明了，用 Propopsition 4 就已經知道 $\text{Ker}\ i$ 最少最少也有一個 $e_H$，因此任何 Kernel 都不是空集合。
