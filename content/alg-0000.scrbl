@@ -11,3 +11,4 @@
 @transclude{Group.DefKer}
 @transclude{Group.KerBasic}
 @transclude{Group.Normal}
+@transclude{Group.IsCat}
