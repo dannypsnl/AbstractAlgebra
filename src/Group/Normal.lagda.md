@@ -2,14 +2,10 @@
 module Group.Normal where
 
 open import MLTT.Spartan renaming (_⁻¹ to sym; _∙_ to _then_)
-open import UF.Base
-open import UF.Sets
-open import UF.Sets-Properties
 
 open import Group.Def
 open Group {{...}}
 open import Group.DefHom
-open import Group.DefKer
 open import Group.HomBasic
 ```
 
