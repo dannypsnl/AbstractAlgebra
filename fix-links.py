@@ -34,13 +34,18 @@ def process_file(filepath, known_addrs):
             # Known address: use local link
             return f'href="/{addr}{anchor}"'
         else:
-            # Unknown address: use TypeTopology link
-            return f'href="https://martinescardo.github.io/TypeTopology/{addr}.html{anchor}"'
+            # Unknown address: use TypeTopology link with target="_blank"
+            return f'href="https://martinescardo.github.io/TypeTopology/{addr}.html{anchor}" target="_blank"'
 
     # Replace href="filename.html" or href="filename.html#anchor"
     # Match relative links with .html extension
     content = re.sub(r'href="([A-Za-z0-9._-]+)\.html(#[^"]*)?(")',
                      lambda m: replace_link(m) + '"',
+                     content)
+
+    # Add target="_blank" to external TypeTopology links that don't have it yet
+    content = re.sub(r'href="(https://martinescardo\.github\.io/TypeTopology/[^"]+)"(?!\s+target="_blank")',
+                     r'href="\1" target="_blank"',
                      content)
 
     if content != original:
