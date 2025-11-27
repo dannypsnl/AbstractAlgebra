@@ -28,7 +28,7 @@ proposition-4 : {G H : 𝓤 ̇} {{∈G : Group G}} {{∈H : Group H}}
 proposition-4 φ is-hom = VI
   where
   I : e ⁻¹ ＝ e
-  I = e ⁻¹ ＝⟨ sym (neu-r (e ⁻¹)) ⟩
+  I = e ⁻¹     ＝⟨ sym (neu-r (e ⁻¹)) ⟩
       e ⁻¹ ∙ e ＝⟨ cancel .pr₁ ⟩
       e ∎
 ```
@@ -37,9 +37,9 @@ proposition-4 φ is-hom = VI
 
 ```
   II : φ e ＝ (φ e) ∙ (φ e)
-  II = φ e ＝⟨ ap (λ x → φ x) (sym (cancel .pr₁)) ⟩
+  II = φ e          ＝⟨ ap (λ x → φ x) (sym (cancel .pr₁)) ⟩
        φ (e ⁻¹ ∙ e) ＝⟨ ap (λ x → φ (x ∙ e)) I ⟩
-       φ (e ∙ e) ＝⟨ is-hom e e ⟩
+       φ (e ∙ e)    ＝⟨ is-hom e e ⟩
        (φ e) ∙ (φ e) ∎
 ```
 
@@ -48,7 +48,7 @@ proposition-4 φ is-hom = VI
 ```
   III : (φ e) ∙ (φ e) ＝ e ∙ (φ e)
   III = (φ e) ∙ (φ e) ＝⟨ sym II ⟩
-        φ e ＝⟨ sym (neu-l (φ e)) ⟩
+        φ e           ＝⟨ sym (neu-l (φ e)) ⟩
         e ∙ φ e ∎
 ```
 
@@ -76,7 +76,7 @@ proposition-5 φ is-hom g = (proposition-3 .pr₁) V
 
   II : φ (g ⁻¹ ∙ g) ＝ e
   II = φ (g ⁻¹ ∙ g) ＝⟨ ap (λ x → φ x) (cancel .pr₁) ⟩
-       φ e ＝⟨ proposition-4 φ is-hom ⟩
+       φ e          ＝⟨ proposition-4 φ is-hom ⟩
        e ∎
 
   III : φ (g ⁻¹) ∙ φ g ＝ e

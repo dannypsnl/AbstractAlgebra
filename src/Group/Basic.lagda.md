@@ -21,7 +21,7 @@ open Group {{...}}
 ```
 proposition-1 : {G : 𝓤 ̇} {{_ : Group G}} {h : G} → left-neutral h _∙_ → h ＝ e
 proposition-1 {G}{_} {h} h-is-identity =
-  h ＝⟨ sym (neu-r h) ⟩
+  h     ＝⟨ sym (neu-r h) ⟩
   h ∙ e ＝⟨ h-is-identity e ⟩
   e ∎
 ```
@@ -35,14 +35,14 @@ proposition-1 {G}{_} {h} h-is-identity =
 ```
 proposition-2 : {G : 𝓤 ̇} {{_ : Group G}} {g h1 h2 : G} → (g ∙ h1 ＝ e) → (g ∙ h2 ＝ e) → h1 ＝ h2
 proposition-2 {G}{_} {g}{h1}{h2} fact1 fact2 =
-  h1 ＝⟨ sym (neu-l h1) ⟩
-  e ∙ h1 ＝⟨ ap (_∙ h1) (sym (cancel .pr₁)) ⟩
-  g ⁻¹ ∙ g ∙ h1 ＝⟨ ∙-assoc (g ⁻¹) g h1 ⟩
+  h1              ＝⟨ sym (neu-l h1) ⟩
+  e ∙ h1          ＝⟨ ap (_∙ h1) (sym (cancel .pr₁)) ⟩
+  g ⁻¹ ∙ g ∙ h1   ＝⟨ ∙-assoc (g ⁻¹) g h1 ⟩
   g ⁻¹ ∙ (g ∙ h1) ＝⟨ ap (g ⁻¹ ∙_) fact1 ⟩
-  g ⁻¹ ∙ e ＝⟨ ap ((g ⁻¹) ∙_) (sym fact2) ⟩
+  g ⁻¹ ∙ e        ＝⟨ ap ((g ⁻¹) ∙_) (sym fact2) ⟩
   g ⁻¹ ∙ (g ∙ h2) ＝⟨ sym (∙-assoc (g ⁻¹) g h2) ⟩
-  g ⁻¹ ∙ g ∙ h2 ＝⟨ ap (_∙ h2) (cancel .pr₁) ⟩
-  e ∙ h2 ＝⟨ neu-l h2 ⟩
+  g ⁻¹ ∙ g ∙ h2   ＝⟨ ap (_∙ h2) (cancel .pr₁) ⟩
+  e ∙ h2          ＝⟨ neu-l h2 ⟩
   h2 ∎
 ```
 
@@ -59,24 +59,24 @@ proposition-3 {G}{_} {g}{h}{a} = I , II
   where
   I : g ∙ a ＝ h ∙ a → g ＝ h
   I fact =
-    g ＝⟨ sym (neu-r g) ⟩
-    g ∙ e ＝⟨ ap (g ∙_) (sym (cancel .pr₂)) ⟩
+    g              ＝⟨ sym (neu-r g) ⟩
+    g ∙ e          ＝⟨ ap (g ∙_) (sym (cancel .pr₂)) ⟩
     g ∙ (a ∙ a ⁻¹) ＝⟨ sym (∙-assoc g a (a ⁻¹)) ⟩
-    g ∙ a ∙ a ⁻¹ ＝⟨ ap (_∙ a ⁻¹) fact ⟩
-    h ∙ a ∙ a ⁻¹ ＝⟨ ∙-assoc h a (a ⁻¹) ⟩
+    g ∙ a ∙ a ⁻¹   ＝⟨ ap (_∙ a ⁻¹) fact ⟩
+    h ∙ a ∙ a ⁻¹   ＝⟨ ∙-assoc h a (a ⁻¹) ⟩
     h ∙ (a ∙ a ⁻¹) ＝⟨ ap (h ∙_) (cancel .pr₂) ⟩
-    h ∙ e ＝⟨ neu-r h ⟩
+    h ∙ e          ＝⟨ neu-r h ⟩
     h ∎
 
   II : a ∙ g ＝ a ∙ h → g ＝ h
   II fact =
-    g ＝⟨ sym (neu-l g) ⟩
-    e ∙ g ＝⟨ ap (_∙ g) (sym (cancel .pr₁)) ⟩
-    a ⁻¹ ∙ a ∙ g ＝⟨ ∙-assoc (a ⁻¹) a g ⟩
+    g              ＝⟨ sym (neu-l g) ⟩
+    e ∙ g          ＝⟨ ap (_∙ g) (sym (cancel .pr₁)) ⟩
+    a ⁻¹ ∙ a ∙ g   ＝⟨ ∙-assoc (a ⁻¹) a g ⟩
     a ⁻¹ ∙ (a ∙ g) ＝⟨ ap (a ⁻¹ ∙_) fact ⟩
     a ⁻¹ ∙ (a ∙ h) ＝⟨ sym (∙-assoc (a ⁻¹) a h) ⟩
-    a ⁻¹ ∙ a ∙ h ＝⟨ ap (_∙ h) (cancel .pr₁) ⟩
-    e ∙ h ＝⟨ neu-l h ⟩
+    a ⁻¹ ∙ a ∙ h   ＝⟨ ap (_∙ h) (cancel .pr₁) ⟩
+    e ∙ h          ＝⟨ neu-l h ⟩
     h ∎
 ```
 
