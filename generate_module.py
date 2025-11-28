@@ -15,16 +15,21 @@ import sys
 from pathlib import Path
 
 
-def parse_module_name(module_name: str) -> tuple[str, str]:
+def parse_module_name(module_name: str) -> tuple[str | None, str]:
     """
-    Parse module name like 'Group.IsoCayley' into directory and file parts.
+    Parse module name into directory and file parts.
+
+    Examples:
+        'Group.IsoCayley' -> ('Group', 'IsoCayley')
+        'ring-0000' -> (None, 'ring-0000')
 
     Returns:
-        (directory, filename) tuple, e.g., ('Group', 'IsoCayley')
+        (directory, filename) tuple where directory is None for single-part names
     """
     parts = module_name.split('.')
     if len(parts) < 2:
-        raise ValueError(f"Module name must contain at least one dot, e.g., 'Group.Def', got: {module_name}")
+        # Single part name like 'ring-0000'
+        return None, module_name
 
     directory = parts[0]
     filename = '.'.join(parts[1:])
@@ -78,7 +83,7 @@ def create_files(module_name: str, title: str = None, taxon: str = None, force: 
     Create both .scrbl and .lagda.md files for the given module.
 
     Args:
-        module_name: Full module name like 'Group.IsoCayley'
+        module_name: Full module name like 'Group.IsoCayley' or 'ring-0000'
         title: Optional title for scrbl file
         taxon: Optional taxon for scrbl file
         force: If True, overwrite existing files
@@ -87,7 +92,11 @@ def create_files(module_name: str, title: str = None, taxon: str = None, force: 
 
     # Paths
     scrbl_path = Path("content/track") / f"{module_name}.scrbl"
-    lagda_path = Path("src") / directory / f"{filename}.lagda.md"
+    if directory is None:
+        # Single-part name, put directly in src/
+        lagda_path = Path("src") / f"{filename}.lagda.md"
+    else:
+        lagda_path = Path("src") / directory / f"{filename}.lagda.md"
 
     # Create directories if they don't exist
     scrbl_path.parent.mkdir(parents=True, exist_ok=True)
