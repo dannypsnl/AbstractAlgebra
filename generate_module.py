@@ -70,7 +70,7 @@ def create_lagda_content(module_name: str) -> str:
     return f"""```agda
 module {module_name} where
 
-open import MLTT.Spartan renaming (_⁻¹ to sym; _∙_ to _then_)
+open import MLTT.Spartan
 open import UF.Base
 open import UF.Sets
 open import UF.Sets-Properties
