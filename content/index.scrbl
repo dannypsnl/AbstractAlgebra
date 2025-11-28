@@ -6,6 +6,7 @@
 @blockquote{請用 @kbd{Cmd + K} 或是 @kbd{Ctrl + K} 查詢內容}
 @p{有興趣嘗試證明器的讀者更是可以試著 fork 專案 @external{https://github.com/dannypsnl/AbstractAlgebra} 練習更多的延伸命題，用 Agda 學習抽象代數。}
 @transclude[#:open #f]{alg-0000}
+@transclude[#:open #f]{alg-0001}
 
 @footer{
   @address['class: "address-block"]{
