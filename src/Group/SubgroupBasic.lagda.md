@@ -95,10 +95,22 @@ proposition-7 : {G H : 𝓤 ̇} {{∈G : Group G}}
 
 ```
   → (h : H)
-  → (∀ (a b : G) → Σ y ꞉ H , a ∙ b ⁻¹ ＝ i y )
+```
+
+> `∀ (a b : G) → Σ y ꞉ H , a ∙ b ⁻¹ ＝ i y` 這整個型別要這樣解讀「對所有 $a, b \in G$，存在 $y \in H$ 使 $a \bullet b^{-1} = i(y)$」。這裡是目前第一次用到 `Σ`，也就是說 `Σ` 當命題時，其實就是用來表達「存在某某某滿足什麼什麼條件」的
+
+```
+  → (∀ (a b : G) → Σ y ꞉ H , a ∙ b ⁻¹ ＝ i y)
   → Σ is-grp ꞉ Group H , IsSubgroup {𝓤} H G {{is-grp}}
 proposition-7 {𝓤}{G}{H} {{∈G}} i inclusion H-is-set h cond = H-is-group , i , inclusion , is-hom
   where
+```
+
+> 接下來的證明很大的複雜性都在 `H` 是群這點上，尤其是因為把 `cond` 的類型定義成存在 `y ∈ H` 映射到 `a ∙ b ⁻¹` 這點上，會讓接下來很多簡單的東西都藏在定義後面。其實如果可以，技巧上最好是以 `G` 為類型，滿足某種條件的元素，而不是真的用另一個型別 `H`，事情會簡單很多
+
+這裡先定義一些工具，像 `I` 就在說 `H` 一定有一個元素可以當單位元，也就是採用前面 inhabited 那個 `h : H` 然後取 `i h ∙ i h ⁻¹` 為單位元（這邊就是技術細節導致的問題，`i h ∙ i h ⁻¹` 的類型是 `G` 不能直接用，還需要取一次 `pr₁` 才是 `H` 的 term）
+
+```
   I : Σ y ꞉ H , i h ∙ i h ⁻¹ ＝ i y
   I = cond (i h) (i h)
   eH : H
@@ -121,7 +133,11 @@ proposition-7 {𝓤}{G}{H} {{∈G}} i inclusion H-is-set h cond = H-is-group , i
     F = cancel .pr₂
     S : a ⁻¹ ∙ a ＝ e
     S = cancel .pr₁
+```
 
+`H` 可以用上面定義的工具滿足群的條件
+
+```
   H-is-group : Group H
   H-is-group .size = H-is-set
   H-is-group ._∙_ a b = II a b .pr₁
@@ -217,7 +233,11 @@ proposition-7 {𝓤}{G}{H} {{∈G}} i inclusion H-is-set h cond = H-is-group , i
     left = inclusion ((sym Hl) then step-left)
     right : (II x x' .pr₁ ＝ eH)
     right = inclusion ((sym Hr) then step-right)
+```
 
+證明的最後一個部分是推論出這樣的 inclusion map 一定是 group homomorphism
+
+```
   is-hom : IsGroupHomomorphism H G {{H-is-group}} i
   is-hom x y =
     i (II x y .pr₁) ＝⟨ sym (II x y .pr₂) ⟩

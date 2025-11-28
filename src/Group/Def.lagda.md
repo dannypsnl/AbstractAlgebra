@@ -15,7 +15,7 @@ $$
 
 構成，且滿足以下條件
 
-1. $G$ 有一個特別的元素叫單位元素（identity element），可以用 $e$ 表示，任何元素 $g$ 跟它運算都是 $g$，也就是 $g = g \bullet e = e \bullet g$
+1. $G$ 有一個特別的元素叫單位元素（identity 或是 neutral element），用 $e$ 表示，任何元素 $g$ 跟它運算都是 $g$，也就是 $g = g \bullet e = e \bullet g$
 2. 這個運算子是 associative 的，也就是說 $(a \bullet b) \bullet c = a \bullet (b \bullet c)$，所以我們可以安全的寫成 $a \bullet b \bullet c$
 3. 每個元素 $g \in G$ 都有一個反元素 $g^{-1} \in G$，滿足以下等式 $g \bullet g^{-1} = g^{-1} \bullet g = e$
 

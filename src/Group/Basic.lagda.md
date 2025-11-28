@@ -28,6 +28,8 @@ proposition-1 {G}{_} {h} h-is-identity =
 
 這個命題的重點是單位元素是唯一的，所以英文的話你可以用「the」修飾。
 
+> `sym` 把等式翻面：`A ＝ B` 變成 `B ＝ A`
+
 ## Proposition 2
 
 如果 $h_1$ and $h_2$ 的反元素都是 $g$，那 $h_1 = h_2$。或者我們會說反元素是唯一的，跟上面的命題的意義類似。
@@ -45,6 +47,8 @@ proposition-2 {G}{_} {g}{h1}{h2} fact1 fact2 =
   e ∙ h2          ＝⟨ neu-l h2 ⟩
   h2 ∎
 ```
+
+> `ap` 把等式裡的 expression 中沒有變化的部分抽出來用的，這樣才能操作其餘要改變的部分
 
 ## Proposition 3
 
