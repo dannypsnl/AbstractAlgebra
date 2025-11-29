@@ -65,7 +65,6 @@ function createResultSpan(obj) {
     linkElement.innerHTML += `${obj.id}`;
   }
                                                                                                           │
-
   return span({}, `[${obj.id}] `, linkElement);
 }
 
