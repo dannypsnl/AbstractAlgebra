@@ -4,3 +4,5 @@
 @transclude{ring-0001}
 @transclude{ring-0002}
 @transclude{ring-0003}
+@transclude{ring-0004}
+@transclude{ring-0005}
