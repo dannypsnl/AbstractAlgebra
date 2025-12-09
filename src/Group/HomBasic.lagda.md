@@ -25,43 +25,25 @@ proposition-4 : {G H : 𝓤 ̇} {{∈G : Group G}} {{∈H : Group H}}
   → (φ : G → H)
   → IsGroupHomomorphism G H φ
   → φ e ＝ e
-```
-
-`VI` 的定義最後會出現，這裡先不用在意
-
-```
-proposition-4 φ is-hom = VI
+proposition-4 φ is-hom = II
   where
-  I : e ⁻¹ ＝ e
-  I = e ⁻¹     ＝⟨ sym (neu-r (e ⁻¹)) ⟩
-      e ⁻¹ ∙ e ＝⟨ cancel .pr₁ ⟩
-      e ∎
 ```
 
-這裡我們先證明 $\varphi(e_G) = \varphi(e_G) \bullet \varphi(e_G)$
+證明 $\varphi(e_G) \bullet \varphi(e_G) = e_H \bullet \varphi(e_G)$
 
 ```
-  II : φ e ＝ (φ e) ∙ (φ e)
-  II = φ e          ＝⟨ ap (λ x → φ x) (sym (cancel .pr₁)) ⟩
-       φ (e ⁻¹ ∙ e) ＝⟨ ap (λ x → φ (x ∙ e)) I ⟩
-       φ (e ∙ e)    ＝⟨ is-hom e e ⟩
-       (φ e) ∙ (φ e) ∎
-```
-
-再證明 $\varphi(e_G) \bullet \varphi(e_G) = e_H \bullet \varphi(e_G)$
-
-```
-  III : (φ e) ∙ (φ e) ＝ e ∙ (φ e)
-  III = (φ e) ∙ (φ e) ＝⟨ sym II ⟩
-        φ e           ＝⟨ sym (neu-l (φ e)) ⟩
+  I : (φ e) ∙ (φ e) ＝ e ∙ (φ e)
+  I = (φ e) ∙ (φ e) ＝⟨ sym (is-hom e e) ⟩
+        φ (e ∙ e)   ＝⟨ ap (λ x → φ x) (neu-l e)  ⟩
+        φ e         ＝⟨ sym (neu-l (φ e)) ⟩
         e ∙ φ e ∎
 ```
 
 那我們就可以用前面證明過的 [[Proposition 3] 任何元素都能取消](/Group.Basic/) 得出結論
 
 ```
-  VI : (φ e) ＝ e
-  VI = (proposition-3 .pr₁) III
+  II : (φ e) ＝ e
+  II = (proposition-3 .pr₁) I
 ```
 
 ## Proposition 5
