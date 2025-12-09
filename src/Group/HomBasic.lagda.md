@@ -34,7 +34,7 @@ proposition-4 φ is-hom = II
 ```
   I : (φ e) ∙ (φ e) ＝ e ∙ (φ e)
   I = (φ e) ∙ (φ e) ＝⟨ sym (is-hom e e) ⟩
-      φ (e ∙ e)     ＝⟨ ap (λ x → φ x) (neu-l e)  ⟩
+      φ (e ∙ e)     ＝⟨ ap φ (neu-l e)  ⟩
       φ e           ＝⟨ sym (neu-l (φ e)) ⟩
       e ∙ φ e ∎
 ```
@@ -66,7 +66,7 @@ proposition-5 φ is-hom g = (proposition-3 .pr₁) V
 
 ```
   II : φ (g ⁻¹ ∙ g) ＝ e
-  II = φ (g ⁻¹ ∙ g) ＝⟨ ap (λ x → φ x) (cancel .pr₁) ⟩
+  II = φ (g ⁻¹ ∙ g) ＝⟨ ap φ (cancel .pr₁) ⟩
        φ e          ＝⟨ proposition-4 φ is-hom ⟩
        e ∎
 
