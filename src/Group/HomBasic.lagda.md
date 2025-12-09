@@ -56,26 +56,22 @@ proposition-5 : {G H : 𝓤 ̇} {{∈G : Group G}} {{∈H : Group H}}
   → IsGroupHomomorphism G H φ
   → (g : G)
   → φ (g ⁻¹) ＝ (φ g) ⁻¹
-proposition-5 φ is-hom g = (proposition-3 .pr₁) V
+proposition-5 φ is-hom g = (proposition-3 .pr₁) III
   where
-  I : φ (g ⁻¹ ∙ g) ＝ φ (g ⁻¹) ∙ φ g
-  I = is-hom (g ⁻¹) g
 ```
 
 這裡馬上就用到剛剛證明的保留 identity 性質
 
 ```
-  II : φ (g ⁻¹ ∙ g) ＝ e
-  II = φ (g ⁻¹ ∙ g) ＝⟨ ap φ (cancel .pr₁) ⟩
-       φ e          ＝⟨ proposition-4 φ is-hom ⟩
-       e ∎
+  I : φ (g ⁻¹) ∙ φ g ＝ e
+  I = φ (g ⁻¹) ∙ φ g ＝⟨ sym (is-hom (g ⁻¹) g) ⟩
+      φ (g ⁻¹ ∙ g)   ＝⟨ ap φ (cancel .pr₁) ⟩
+      φ e            ＝⟨ proposition-4 φ is-hom ⟩
+      e ∎
 
-  III : φ (g ⁻¹) ∙ φ g ＝ e
-  III = (sym I) then II
+  II : e ＝ (φ g) ⁻¹ ∙ (φ g)
+  II = sym (cancel .pr₁)
 
-  IV : (φ g) ⁻¹ ∙ (φ g) ＝ e
-  IV = cancel .pr₁
-
-  V : φ (g ⁻¹) ∙ φ g ＝ (φ g) ⁻¹ ∙ (φ g)
-  V = III then (sym IV)
+  III : φ (g ⁻¹) ∙ φ g ＝ (φ g) ⁻¹ ∙ (φ g)
+  III = I then II
 ```
