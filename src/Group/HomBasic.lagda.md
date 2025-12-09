@@ -34,9 +34,9 @@ proposition-4 φ is-hom = II
 ```
   I : (φ e) ∙ (φ e) ＝ e ∙ (φ e)
   I = (φ e) ∙ (φ e) ＝⟨ sym (is-hom e e) ⟩
-        φ (e ∙ e)   ＝⟨ ap (λ x → φ x) (neu-l e)  ⟩
-        φ e         ＝⟨ sym (neu-l (φ e)) ⟩
-        e ∙ φ e ∎
+      φ (e ∙ e)     ＝⟨ ap (λ x → φ x) (neu-l e)  ⟩
+      φ e           ＝⟨ sym (neu-l (φ e)) ⟩
+      e ∙ φ e ∎
 ```
 
 那我們就可以用前面證明過的 [[Proposition 3] 任何元素都能取消](/Group.Basic/) 得出結論
