@@ -7,3 +7,4 @@
 @transclude{ring-0004}
 @transclude{ring-0006}
 @transclude{ring-0005}
+@transclude{ring-0007}
