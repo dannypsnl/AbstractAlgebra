@@ -8,3 +8,4 @@
 @transclude{ring-0006}
 @transclude{ring-0005}
 @transclude{ring-0007}
+@transclude{ring-0008}
