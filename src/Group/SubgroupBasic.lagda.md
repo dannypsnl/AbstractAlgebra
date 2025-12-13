@@ -54,7 +54,7 @@ proposition-6 {𝓤} {G} = ι , lc , is-hom
   lc p = refl
 ```
 
-比較複雜的會是滿足 group homomorphism 的部分，大致的思考是利用 $e$ 的一些特性攤開出我們需要的表達式
+最後要滿足 group homomorphism，下面利用 $e$ 攤開出我們需要的表達式
 
 ```
   is-hom : IsGroupHomomorphism 𝟙 G ι
