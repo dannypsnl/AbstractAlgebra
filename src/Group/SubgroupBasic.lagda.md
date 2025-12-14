@@ -10,7 +10,7 @@ open import group-0000
 open Group {{...}}
 open import group-0002
 open import group-0004
-open import Group.DefSubgroup
+open import group-0007
 ```
 
 ## Proposition 6

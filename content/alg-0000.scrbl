@@ -19,7 +19,7 @@
   @transclude{group-0005}
   @transclude{group-0006}
 }
-@transclude{Group.DefSubgroup}
+@transclude{group-0007}
 @transclude{Group.SubgroupBasic}
 @transclude{Group.DefKer}
 @transclude{Group.KerBasic}

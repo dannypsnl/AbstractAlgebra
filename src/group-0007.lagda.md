@@ -1,5 +1,5 @@
 ```
-module Group.DefSubgroup where
+module group-0007 where
 
 open import MLTT.Spartan
 
