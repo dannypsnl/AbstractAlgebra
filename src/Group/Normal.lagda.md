@@ -6,7 +6,7 @@ open import MLTT.Spartan renaming (_⁻¹ to sym; _∙_ to _then_)
 open import group-0000
 open Group {{...}}
 open import group-0004
-open import Group.HomBasic
+open import group-0006
 ```
 
 如果 $G$ 的子群 $N$ 對所有 $g \in G$ 跟 $n \in N$ 滿足以下條件

@@ -9,8 +9,8 @@ open import UF.Equiv
 open import group-0000
 open Group {{...}}
 open import group-0004
+open import group-0005
 open import Group.DefKer
-open import Group.HomBasic
 ```
 
 ## Proposition 8

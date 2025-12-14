@@ -12,7 +12,13 @@
   @transclude{group-0003}
 }
 @transclude{group-0004}
-@transclude{Group.HomBasic}
+@tr/card{
+  @title{Basic facts of group homomorphism}
+
+  @p{所以我們接著來看一個 group homomorphism 會有什麼特性。}
+  @transclude{group-0005}
+  @transclude{group-0006}
+}
 @transclude{Group.DefSubgroup}
 @transclude{Group.SubgroupBasic}
 @transclude{Group.DefKer}
