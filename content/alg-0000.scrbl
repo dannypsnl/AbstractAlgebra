@@ -20,7 +20,12 @@
   @transclude{group-0006}
 }
 @transclude{group-0007}
-@transclude{Group.SubgroupBasic}
+@tr/card{
+  @title{Basic facts of subgroup}
+
+  @transclude{group-0008}
+  @transclude{group-0009}
+}
 @transclude{Group.DefKer}
 @transclude{Group.KerBasic}
 @transclude{Group.Normal}
