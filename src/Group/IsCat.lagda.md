@@ -5,7 +5,7 @@ module Group.IsCat (fe : Fun-Ext) where
 open import MLTT.Spartan renaming (_⁻¹ to sym; _∙_ to _then_)
 open import Categories.Category fe
 
-open import Group.Def
+open import group-0000
 open Group {{...}}
 ```
 

@@ -6,7 +6,7 @@ open import UF.Base
 open import UF.Sets
 open import UF.Sets-Properties
 
-open import Group.Def
+open import group-0000
 open Group {{...}}
 open import Group.Basic
 open import Group.DefHom

@@ -6,7 +6,7 @@ open import UF.Sets
 open import UF.Subsingletons
 open import UF.Subsingletons-Properties
 
-open import Group.Def
+open import group-0000
 open Group {{...}}
 open import Group.Basic
 open import Group.DefHom

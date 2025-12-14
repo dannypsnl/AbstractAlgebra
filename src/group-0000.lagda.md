@@ -1,5 +1,5 @@
 ```agda
-module Group.Def where
+module group-0000 where
 
 open import MLTT.Spartan hiding (_∙_) renaming (_⁻¹ to sym)
 open import UF.Base
