@@ -1,10 +1,7 @@
 ```
-module Group.DefHom where
+module group-0004 where
 
 open import MLTT.Spartan hiding (_∙_) renaming (_⁻¹ to sym)
-open import UF.Base
-open import UF.Sets
-open import UF.Sets-Properties
 
 open import group-0000
 open Group {{...}}

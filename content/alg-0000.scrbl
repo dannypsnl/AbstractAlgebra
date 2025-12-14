@@ -11,7 +11,7 @@
   @transclude{group-0002}
   @transclude{group-0003}
 }
-@transclude{Group.DefHom}
+@transclude{group-0004}
 @transclude{Group.HomBasic}
 @transclude{Group.DefSubgroup}
 @transclude{Group.SubgroupBasic}
