@@ -1,7 +1,7 @@
 @date{2025-12-13}
 
 @ol{
-  @li{更新 @mention{Group.SubgroupBasic} 對命題的說明}
+  @li{更新 @mention{group-0008} 的說明}
   @li{@mention{ring-000A}}
   @li{@mention{ring-0009}}
   @li{@mention{ring-0008}}

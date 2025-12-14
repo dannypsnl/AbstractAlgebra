@@ -1,5 +1,5 @@
 ```agda
-module Group.Normal where
+module group-000C where
 
 open import MLTT.Spartan renaming (_⁻¹ to sym; _∙_ to _then_)
 
@@ -8,16 +8,6 @@ open Group {{...}}
 open import group-0004
 open import group-0006
 ```
-
-如果 $G$ 的子群 $N$ 對所有 $g \in G$ 跟 $n \in N$ 滿足以下條件
-
-$$
-g \bullet h \bullet g^{-1} \in N
-$$
-
-我們就說 $N$ 是 Normal subgroup。
-
-## Proposition 9
 
 > 為了避免複雜的編碼，下面直接根據需求定義。
 
