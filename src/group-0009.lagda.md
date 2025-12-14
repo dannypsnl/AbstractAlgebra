@@ -188,3 +188,110 @@ proposition-7 {𝓤}{G}{H} {{∈G}} i inclusion H-is-set h cond = H-is-group , i
     i x ∙ i y ⁻¹ ⁻¹ ＝⟨ ap (i x ∙_) (inv-inv (i y)) ⟩
     i x ∙ i y ∎
 ```
+
+這裡來嘗試第二種編碼方式證明同樣的命題
+
+1. 用 `∈H : G → 𝓤 ̇ ` 編碼了屬於 `H` 集合這個前提
+2. 規定 `∈H` 是 proposition（沒錯，在 HoTT 裡你同樣能問一個類型是不是一個命題）
+3. inhabited `h : G` 且 `h ∈H` 表示了 `H` 不是空集合
+
+> 下面會反覆使用的技術是 `to-Σ-＝`，這樣就會證明一次 `G` 中元素在屬於 `H` 時的等式，隨後要處理一個 transport 問題，但因為上面第二個條件（`∈H` 是 proposition），使得這個證明是完全由 Agda 可以自動合成的
+
+```
+open import UF.Sets-Properties
+open import UF.Subsingletons
+open import UF.Base
+
+proposition-7' : {G : 𝓤 ̇} {{∈G : Group G}}
+  → (_∈H : G → 𝓤 ̇ )
+  → (∀ (a : G) → is-prop (a ∈H))
+  → (∀ (a b : G) → a ∙ b ⁻¹ ∈H)
+  → (h : G)
+  → h ∈H
+  → Σ is-grp ꞉ Group (Σ x ꞉ G , x ∈H) , IsSubgroup {𝓤} (Σ x ꞉ G , x ∈H) G {{is-grp}}
+proposition-7' {𝓤}{G}{{∈G}} _∈H ∈H-is-prop cond h h∈H = H-is-grp , is-subgroup
+  where
+  inv-inv : (a : G) → a ⁻¹ ⁻¹ ＝ a
+  inv-inv a = proposition-2 F S
+    where
+    F : a ⁻¹ ∙ a ⁻¹ ⁻¹ ＝ e
+    F = cancel .pr₂
+    S : a ⁻¹ ∙ a ＝ e
+    S = cancel .pr₁
+
+  H-is-grp : Group (Σ x ꞉ G , x ∈H)
+  H-is-grp .size = subsets-of-sets-are-sets G _∈H (Group.size ∈G) λ {x = x₁} → ∈H-is-prop x₁
+  H-is-grp ._∙_ (a , a∈H) (b , b∈H) = a ∙ b ⁻¹ ⁻¹ , cond a (b ⁻¹)
+  H-is-grp .∙-assoc (a , a∈H) (b , b∈H) (c , c∈H) = to-Σ-＝ (elem , ∈H-is-prop (pr₁ ((H-is-grp Group.∙ (a , a∈H)) ((H-is-grp Group.∙ (b , b∈H)) (c , c∈H)))) (transport _∈H elem (pr₂ ((H-is-grp Group.∙ (H-is-grp Group.∙ (a , a∈H)) (b , b∈H)) (c , c∈H)))) (pr₂ ((H-is-grp Group.∙ (a , a∈H)) ((H-is-grp Group.∙ (b , b∈H)) (c , c∈H)))))
+    where
+    elem : (a ∙ b ⁻¹ ⁻¹) ∙ c ⁻¹ ⁻¹ ＝ a ∙ (b ∙ c ⁻¹ ⁻¹) ⁻¹ ⁻¹
+    elem =
+      (a ∙ b ⁻¹ ⁻¹) ∙ c ⁻¹ ⁻¹ ＝⟨ ∙-assoc a (b ⁻¹ ⁻¹) (c ⁻¹ ⁻¹) ⟩
+      a ∙ (b ⁻¹ ⁻¹ ∙ c ⁻¹ ⁻¹) ＝⟨ ap (λ b → a ∙ (b ∙ c ⁻¹ ⁻¹)) (inv-inv b) ⟩
+      a ∙ (b ∙ c ⁻¹ ⁻¹)       ＝⟨ ap (a ∙_) (sym (inv-inv (b ∙ c ⁻¹ ⁻¹))) ⟩
+      a ∙ (b ∙ c ⁻¹ ⁻¹) ⁻¹ ⁻¹ ∎
+  H-is-grp .e = (h ∙ h ⁻¹) , cond h h
+  H-is-grp .neu-l (x , x∈H) = to-Σ-＝ (elem , ∈H-is-prop x (transport _∈H elem (pr₂ ((H-is-grp Group.∙ H-is-grp .Group.e) (x , x∈H)))) x∈H)
+    where
+    elem : (h ∙ h ⁻¹) ∙ x ⁻¹ ⁻¹ ＝ x
+    elem =
+      (h ∙ h ⁻¹) ∙ x ⁻¹ ⁻¹ ＝⟨ ap (_∙ (x ⁻¹) ⁻¹) (∈G .cancel .pr₂) ⟩
+      e ∙ x ⁻¹ ⁻¹          ＝⟨ neu-l (x ⁻¹ ⁻¹) ⟩
+      x ⁻¹ ⁻¹              ＝⟨ inv-inv x ⟩
+      x ∎
+  H-is-grp .neu-r (x , x∈H) = to-Σ-＝ (elem , ∈H-is-prop x (transport _∈H elem (pr₂ ((H-is-grp Group.∙ (x , x∈H)) (H-is-grp .Group.e)))) x∈H)
+    where
+    elem : x ∙ (h ∙ h ⁻¹) ⁻¹ ⁻¹ ＝ x
+    elem =
+      x ∙ (h ∙ h ⁻¹) ⁻¹ ⁻¹ ＝⟨ ap (x ∙_) (inv-inv (h ∙ h ⁻¹)) ⟩
+      x ∙ (h ∙ h ⁻¹)       ＝⟨ ap (x ∙_) (∈G .cancel .pr₂) ⟩
+      x ∙ e                ＝⟨ neu-r x ⟩
+      x ∎
+  H-is-grp ._⁻¹ (x , x∈H) = (h ∙ h ⁻¹) ∙ x ⁻¹ , cond (h ∙ h ⁻¹) x
+  H-is-grp .cancel {x} =
+    to-Σ-＝ (cL , ∈H-is-prop (pr₁ (Group.e H-is-grp))
+      (transport _∈H cL
+       (pr₂ ((H-is-grp Group.∙ (H-is-grp Group.⁻¹) x) x)))
+      (pr₂ (Group.e H-is-grp))) ,
+    to-Σ-＝ (cR , ∈H-is-prop (pr₁ (Group.e H-is-grp))
+      (transport _∈H cR
+       (pr₂ ((H-is-grp Group.∙ x) ((H-is-grp Group.⁻¹) x))))
+      (pr₂ (Group.e H-is-grp)))
+    where
+    k = x .pr₁
+    cL : (h ∙ h ⁻¹ ∙ k ⁻¹) ∙ k ⁻¹ ⁻¹ ＝ h ∙ h ⁻¹
+    cL =
+      (h ∙ h ⁻¹ ∙ k ⁻¹) ∙ k ⁻¹ ⁻¹ ＝⟨ ap (h ∙ h ⁻¹ ∙ k ⁻¹ ∙_) (inv-inv k) ⟩
+      (h ∙ h ⁻¹ ∙ k ⁻¹) ∙ k       ＝⟨ ap (_∙ k) (∙-assoc h (h ⁻¹) (k ⁻¹)) ⟩
+      h ∙ (h ⁻¹ ∙ k ⁻¹) ∙ k       ＝⟨ ∙-assoc h (h ⁻¹ ∙ k ⁻¹) k ⟩
+      h ∙ ((h ⁻¹ ∙ k ⁻¹) ∙ k)     ＝⟨ ap (h ∙_) (∙-assoc (h ⁻¹) (k ⁻¹) k) ⟩
+      h ∙ (h ⁻¹ ∙ (k ⁻¹ ∙ k))     ＝⟨ ap (h ∙_) (ap (h ⁻¹ ∙_) (cancel .pr₁)) ⟩
+      h ∙ (h ⁻¹ ∙ e)              ＝⟨ ap (h ∙_) (neu-r (h ⁻¹)) ⟩
+      h ∙ h ⁻¹ ∎
+    cR : k ∙ (h ∙ h ⁻¹ ∙ k ⁻¹) ⁻¹ ⁻¹ ＝ h ∙ h ⁻¹
+    cR =
+      k ∙ (h ∙ h ⁻¹ ∙ k ⁻¹) ⁻¹ ⁻¹ ＝⟨ ap (k ∙_) (inv-inv (h ∙ h ⁻¹ ∙ k ⁻¹)) ⟩
+      k ∙ (h ∙ h ⁻¹ ∙ k ⁻¹)       ＝⟨ ap (k ∙_) (ap (_∙ k ⁻¹) (cancel .pr₂)) ⟩
+      k ∙ (e ∙ k ⁻¹)              ＝⟨ ap (k ∙_) (neu-l (k ⁻¹)) ⟩
+      k ∙ k ⁻¹                    ＝⟨ cancel .pr₂ ⟩
+      e                           ＝⟨ sym (cancel .pr₂) ⟩
+      h ∙ h ⁻¹ ∎
+
+  ι : Σ x ꞉ G , x ∈H → G
+  ι (x , _) = x
+  is-subgroup : IsSubgroup {𝓤} (Σ x ꞉ G , x ∈H) G {{H-is-grp}} {{∈G}}
+  is-subgroup = ι , (inj , is-hom)
+    where
+    inj : left-cancellable ι
+    inj {x}{y} P =
+      x ＝⟨ to-Σ-＝ (P , ∈H-is-prop (y .pr₁) (transport _∈H P (pr₂ x)) (y .pr₂)) ⟩
+      y ∎
+
+    is-hom : IsGroupHomomorphism (Σ x ꞉ G , x ∈H) G {{H-is-grp}} {{∈G}} ι
+    is-hom (x , x∈H) (y , y∈H) =
+      ι ((x , x∈H) ∙ᴴ (y , y∈H)) ＝⟨by-definition⟩
+      x ∙ y ⁻¹ ⁻¹                ＝⟨ ap (x ∙_) (inv-inv y) ⟩
+      x ∙ y                      ＝⟨by-definition⟩
+      ι (x , x∈H) ∙ ι (y , y∈H) ∎
+      where open Group H-is-grp renaming (_∙_ to _∙ᴴ_) hiding (_⁻¹)
+```
