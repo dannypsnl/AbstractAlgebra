@@ -8,7 +8,7 @@ open import UF.Subsingletons-Properties
 
 open import group-0000
 open Group {{...}}
-open import Group.Basic
+open import group-0002
 open import Group.DefHom
 open import Group.DefSubgroup
 ```

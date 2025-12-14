@@ -3,7 +3,14 @@
 @p{這裡我們開始介紹群論}
 @transclude{group-0000}
 @transclude{agda-0000}
-@transclude{Group.Basic}
+@tr/card{
+  @title{Basic facts about groups}
+
+  @p{現在來看一些命題}
+  @transclude{group-0001}
+  @transclude{group-0002}
+  @transclude{group-0003}
+}
 @transclude{Group.DefHom}
 @transclude{Group.HomBasic}
 @transclude{Group.DefSubgroup}
