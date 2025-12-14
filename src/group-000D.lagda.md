@@ -1,6 +1,6 @@
 ```agda
 open import UF.FunExt
-module Group.IsCat (fe : Fun-Ext) where
+module group-000D (fe : Fun-Ext) where
 
 open import MLTT.Spartan renaming (_⁻¹ to sym; _∙_ to _then_)
 open import Categories.Category fe
