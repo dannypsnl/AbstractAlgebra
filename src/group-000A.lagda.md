@@ -1,5 +1,5 @@
 ```
-module Group.DefKer where
+module group-000A where
 
 open import MLTT.Spartan
 

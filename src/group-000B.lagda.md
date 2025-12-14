@@ -1,6 +1,5 @@
 ```
-{-# OPTIONS --allow-unsolved-metas #-}
-module Group.KerBasic where
+module group-000B where
 
 open import MLTT.Spartan renaming (_⁻¹ to sym; _∙_ to _then_)
 open import UF.Base
@@ -10,10 +9,8 @@ open import group-0000
 open Group {{...}}
 open import group-0004
 open import group-0005
-open import Group.DefKer
+open import group-000A
 ```
-
-## Proposition 8
 
 這個命題是說，如果 group homomorphism $i : H \to G$ 是 inclusion，那 Kernel 的元素其實只有單位元素 $e_H$。
 

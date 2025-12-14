@@ -26,7 +26,11 @@
   @transclude{group-0008}
   @transclude{group-0009}
 }
-@transclude{Group.DefKer}
-@transclude{Group.KerBasic}
+@transclude{group-000A}
+@tr/card{
+  @title{Basic facts of Kernel}
+
+  @transclude{group-000B}
+}
 @transclude{Group.Normal}
 @transclude{Group.IsCat}
