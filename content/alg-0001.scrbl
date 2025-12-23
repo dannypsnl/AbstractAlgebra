@@ -12,3 +12,4 @@
 @transclude{ring-0009}
 @transclude{ring-000A}
 @transclude{ring-000B}
+@transclude{ring-000C}
