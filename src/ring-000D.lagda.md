@@ -31,7 +31,7 @@ _+ᴵ_ : {R : 𝓤 ̇ } {{_ : Ring R}} → (I J : 𝓟 R) → 𝓟 R
 _+ᴵ_ {_}{R} I J r = ∥ T I J r ∥ , ∥∥-is-prop
 ```
 
-使用 propositional truncation `∥_∥` 來表示「存在某種分解」，這樣自動就是 proposition。下面是證明
+使用 propositional truncation `∥_∥` 來表示「存在某種分解」。下面開始證明
 
 ```
 proposition-8 : {R : 𝓤 ̇ } {{_ : Ring R}} {I J : 𝓟 R} → IsIdeal I → IsIdeal J → IsIdeal (I +ᴵ J)
