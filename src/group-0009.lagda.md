@@ -202,7 +202,7 @@ open import UF.Sets-Properties
 open import UF.Subsingletons
 open import UF.Base
 
-proposition-7' : {G : 𝓤 ̇} {{∈G : Group G}}
+proposition-7' : {G : 𝓤 ̇ } {{∈G : Group G}}
   → (_∈H : G → 𝓤 ̇ )
   → (∀ (a : G) → is-prop (a ∈H))
   → (∀ (a b : G) → a ∙ b ⁻¹ ∈H)
