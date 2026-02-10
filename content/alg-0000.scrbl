@@ -38,7 +38,7 @@
 
   @p{如果 @m{G} 的@mention["group-0007"]{子群} @m{N} 對所有 @m{g \in G} 與 @m{n \in N} 滿足以下條件}
   @mm{
-    g \bullet h \bullet g^{-1} \in N
+    g \bullet n \bullet g^{-1} \in N
   }
   @p{我們就說 @m{N} 是 Normal subgroup。}
 }
