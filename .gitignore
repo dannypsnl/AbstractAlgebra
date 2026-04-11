@@ -1,5 +1,6 @@
 _tmp/
 _build/
+node_modules/
 
 # output of literate agda
 html/
