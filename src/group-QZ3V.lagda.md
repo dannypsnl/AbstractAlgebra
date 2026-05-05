@@ -50,16 +50,15 @@ instance
 如果群的二元運算 `a ∙ b` 本身就是一個 group homomorphism，那麼 `G` 是交換群
 
 ```
-mul-is-hom-leads-commutative : {G : 𝓤 ̇} {{∈G : Group G}}
-  (μ : G × G → G)
-  → ((a b : G) → μ(a , b) ＝ a ∙ b)
+μ : {G : 𝓤 ̇} {{∈G : Group G}} → G × G → G
+μ (a , b) = a ∙ b
+
+∙-is-hom-leads-commutative : {G : 𝓤 ̇} {{∈G : Group G}}
   → (μ-is-hom : IsGroupHomomorphism (G × G) G μ)
   → (x y : G) → x ∙ y ＝ y ∙ x
-mul-is-hom-leads-commutative {𝓤} {G} {{_}} μ μ-is-mul μ-is-hom x y =
+∙-is-hom-leads-commutative {𝓤} {G} {{_}} μ-is-hom x y =
   x ∙ y               ＝⟨ ap₂ (_∙_) (sym (neu-l x)) (sym (neu-r y)) ⟩
-  (e ∙ x) ∙ (y ∙ e)   ＝⟨ sym (μ-is-mul (e ∙ x) (y ∙ e)) ⟩
   μ(e ∙ x , y ∙ e)    ＝⟨ interchange e y x e ⟩
-  μ(e , y) ∙ μ(x , e) ＝⟨ ap₂ (_∙_) (μ-is-mul e y) (μ-is-mul x e) ⟩
   (e ∙ y) ∙ (x ∙ e)  ＝⟨ ap₂ _∙_ (neu-l y) (neu-r x) ⟩
   y ∙ x ∎
   where
