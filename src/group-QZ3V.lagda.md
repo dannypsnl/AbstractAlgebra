@@ -2,6 +2,7 @@
 module group-QZ3V where
 
 open import MLTT.Spartan renaming (_⁻¹ to sym; _∙_ to _then_)
+open import UF.Base
 open import UF.Sets
 
 open import group-0000
@@ -55,14 +56,11 @@ mul-is-hom-leads-commutative : {G : 𝓤 ̇} {{∈G : Group G}}
   → (μ-is-hom : IsGroupHomomorphism (G × G) G μ)
   → (x y : G) → x ∙ y ＝ y ∙ x
 mul-is-hom-leads-commutative {𝓤} {G} {{_}} μ μ-is-mul μ-is-hom x y =
-  x ∙ y               ＝⟨ ap (_∙ y) (sym (neu-l x)) ⟩
-  (e ∙ x) ∙ y         ＝⟨ ap (e ∙ x ∙_) (sym (neu-r y)) ⟩
+  x ∙ y               ＝⟨ ap₂ (_∙_) (sym (neu-l x)) (sym (neu-r y)) ⟩
   (e ∙ x) ∙ (y ∙ e)   ＝⟨ sym (μ-is-mul (e ∙ x) (y ∙ e)) ⟩
   μ(e ∙ x , y ∙ e)    ＝⟨ interchange e y x e ⟩
-  μ(e , y) ∙ μ(x , e) ＝⟨ ap (_∙ μ (x , e)) (μ-is-mul e y) ⟩
-  (e ∙ y) ∙ μ(x , e)  ＝⟨ ap (_∙ μ (x , e)) (neu-l y) ⟩
-  y ∙ μ(x , e)        ＝⟨ ap (y ∙_) (μ-is-mul x e) ⟩
-  y ∙ (x ∙ e)         ＝⟨ ap (y ∙_) (neu-r x) ⟩
+  μ(e , y) ∙ μ(x , e) ＝⟨ ap₂ (_∙_) (μ-is-mul e y) (μ-is-mul x e) ⟩
+  (e ∙ y) ∙ (x ∙ e)  ＝⟨ ap₂ _∙_ (neu-l y) (neu-r x) ⟩
   y ∙ x ∎
   where
   interchange : (a b c d : G) → μ (a ∙ c , b ∙ d) ＝ μ (a , b) ∙ μ (c , d)
