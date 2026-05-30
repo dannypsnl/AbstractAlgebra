@@ -10,6 +10,8 @@ open import group-0002
 open Group {{...}}
 ```
 
+參考：[Single axiom: with and without computers](https://www.mcs.anl.gov/uploads/cels/papers/P901.pdf) 中的 1952 年 Higman and Neumann
+
 Division presentation 只有一個二元運算 `_/_`（在標準模型中 `x / y = x ∙ y ⁻¹`），
 而且等式只有一條
 

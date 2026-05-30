@@ -9,6 +9,8 @@ open import group-0000
 open Group {{...}}
 ```
 
+參考 [nLab heap](https://ncatlab.org/nlab/show/heap)
+
 Heap presentation 用一個三元運算 `p`（標準模型讀作 `p x y z = (x ∙ y ⁻¹) ∙ z`），
 完全沒有挑出單位元，所以它記得的資訊比 group 少一個 nullary 運算。
 
