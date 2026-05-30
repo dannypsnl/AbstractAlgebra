@@ -2,7 +2,7 @@
 
 @p{有些「單一公理」的代數 presentation，要從該公理推回一般的群律會極其困難 -- 比如 @mention{group-ZXNB} 裡 @code{Div→Group} 需要證明 @m{\text{/-trans} : (a/c)/(b/c) = a/b}，但我們手上卻只有一個等式}
 @mm{x / (((x / x) / y / z) / (((x / x) / x) / z)) = y}
-@p{這表示手算很難直接湊出來。不過我們可以靠自動定理證明器 @external["https://www.mcs.anl.gov/research/projects/AR/otter/"]{OTTER}（及其後繼者 @external["https://www.cs.unm.edu/~mccune/prover9/"]{Prover9}）找出來}
+@p{這表示手算很難直接湊出來。不過我們可以靠自動定理證明器 @external["https://www.mcs.anl.gov/research/projects/AR/otter/"]{OTTER}（及其後繼者 @external["https://prover9.org/manual-2026/"]{Prover9}）找出來}
 
 @p{這裡記錄實際流程：先讓 Prover9 找出論證骨架，再逐條把它轉寫成 Agda 的等式推理。Prover9 能告訴我們「哪些中繼引理、用什麼順序、由誰推出誰」，剩下的就只是無聊的轉譯工作}
 
