@@ -1,3 +1,4 @@
+@date{2026-05-30}
 @title{用 Prover9 找等式證明}
 
 @p{有些「單一公理」的代數 presentation，要從該公理推回一般的群律會極其困難 -- 比如 @mention{group-ZXNB} 裡 @code{Div→Group} 需要證明 @m{\text{/-trans} : (a/c)/(b/c) = a/b}，但我們手上卻只有一個等式}
