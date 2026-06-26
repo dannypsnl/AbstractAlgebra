@@ -245,3 +245,60 @@ blockquote {
   background-color: #f9f9f9;
   font-style: italic;
 }
+
+.Agda {
+  --agda-foreground:  black;
+  --agda-accent:      #831bd9;          /* 主 accent，紫（建構子/模組/字面量） */
+  --agda-accent2:     #6666ff;          /* 綁定變數，藍紫 */
+  --agda-comment:     hsl(0, 0%, 50%);  /* 註解，灰 */
+  --agda-hover-bg:    #ccc;
+  --agda-defined:     var(--agda-foreground);
+  --agda-literal:     var(--agda-accent);
+  --agda-keyword:     var(--agda-foreground);
+  --agda-symbol:      var(--agda-foreground);
+  --agda-module:      var(--agda-literal);
+  --agda-constructor: var(--agda-literal);
+}
+
+/* Aspects. */
+.Agda .Comment       { color: var(--agda-comment) }
+.Agda .Background    {}
+.Agda .Markup        {}
+.Agda .Keyword       { color: var(--agda-keyword); font-weight: bold; }
+.Agda .String        { color: var(--agda-literal) }
+.Agda .Number        { color: var(--agda-literal) }
+.Agda .Symbol        { color: var(--agda-symbol) }
+.Agda .PrimitiveType { color: var(--agda-defined) }
+.Agda .Pragma        { color: var(--agda-keyword) }
+.Agda .Operator      {}
+.Agda .Hole          { background: #e4cbef }
+
+/* NameKinds. */
+.Agda .Bound                  { color: var(--agda-accent2) }
+.Agda .Generalizable          { color: var(--agda-accent2) }
+.Agda .InductiveConstructor   { color: var(--agda-constructor) }
+.Agda .CoinductiveConstructor { color: var(--agda-constructor) }
+.Agda .Datatype               { color: var(--agda-defined) }
+.Agda .Field                  { color: var(--agda-constructor) }
+.Agda .Function               { color: var(--agda-defined) }
+.Agda .Macro                  { color: var(--agda-defined) }
+.Agda .Module                 { color: var(--agda-module) }
+.Agda .Postulate              { color: var(--agda-defined) }
+.Agda .Primitive              { color: var(--agda-defined) }
+.Agda .Record                 { color: var(--agda-defined) }
+
+/* OtherAspects. */
+.Agda .DottedPattern        {}
+.Agda .UnsolvedMeta         { color: var(--agda-foreground); background: yellow         }
+.Agda .UnsolvedConstraint   { color: var(--agda-foreground); background: yellow         }
+.Agda .TerminationProblem   { color: var(--agda-foreground); background: #FFA07A        }
+.Agda .IncompletePattern    { color: var(--agda-foreground); background: #F5DEB3        }
+.Agda .Error                { color: red;   text-decoration: underline }
+.Agda .TypeChecks           { color: var(--agda-foreground); background: #ADD8E6        }
+.Agda .Deadcode             { color: var(--agda-foreground); background: #808080        }
+.Agda .ShadowingInTelescope { color: var(--agda-foreground); background: #808080        }
+
+/* Standard attributes. */
+.Agda a { text-decoration: none }
+.Agda a[href]:hover { background-color: var(--agda-hover-bg); }
+.Agda [href].hover-highlight { background-color: var(--agda-hover-bg); }
