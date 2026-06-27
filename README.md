@@ -17,6 +17,7 @@ uv run serve.py
 
 1. tr-notes: https://github.com/dannypsnl/tr
 2. agda
-3. uv
+3. tangle-lagda: https://codeberg.org/dannypsnl/tangle-lagda
+4. uv
 
 因為公式都由 agda、pandoc 這邊處理了，倒是不用裝 MacTex、dvisvgm 這些本來 tr-notes 會用到的部分。
