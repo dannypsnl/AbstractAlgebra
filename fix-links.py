@@ -13,9 +13,12 @@ def load_known_addrs():
     for scrbl_file in track_dir.glob('*.scrbl'):
         with open(scrbl_file, 'r', encoding='utf-8') as f:
             content = f.read()
-            # Extract module name from @disable-prefix{@include{../html/XXX.html}}
-            matches = re.findall(r'@include\{\.\.\/html\/([^}]+)\.html\}', content)
-            known_addrs.update(matches)
+            # Extract module name from @disable-prefix{@include{../html/XXX.N.html}}
+            # (weave emits one slice per @agda block, named <addr>.<n>.html); strip
+            # the trailing .<n> to recover the card address.
+            matches = re.findall(r'@include\{\.\.\/html\/([^}]+?)\.html\}', content)
+            for m in matches:
+                known_addrs.add(re.sub(r'\.\d+$', '', m))
 
     return known_addrs
 
