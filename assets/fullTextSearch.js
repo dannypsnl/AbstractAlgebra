@@ -54,30 +54,84 @@ fetch("/search.json")
   })
   .catch((err) => console.error(err));
 
-function createResultSpan(obj) {
+function createResultItem(obj) {
   const href = obj.id === "index" ? "/" : `/${obj.id}`;
-  const linkElement = a({ href });
 
-  for (let i = 0; i < obj.title.length; i++) {
-    linkElement.innerHTML += obj.title[i];
+  const titleSpan = span({ className: "sr-title" });
+  const title = Array.isArray(obj.title) ? obj.title.join("") : obj.title || "";
+  titleSpan.innerHTML = title || `${obj.id}`;
+
+  const children = [span({ className: "sr-id" }, `[${obj.id}]`)];
+  if (obj.taxon) {
+    children.push(span({ className: "sr-taxon" }, obj.taxon));
   }
-  if (!obj.title || obj.title.length === 0) {
-    linkElement.innerHTML += `${obj.id}`;
+  children.push(titleSpan);
+
+  return a({ className: "search-result-item", href }, ...children);
+}
+
+// 目前畫面上的結果項目與被選取的 index
+let resultItems = [];
+let selectedIndex = -1;
+
+function renderResults(list) {
+  const search_result = $("#search-result");
+  search_result.innerHTML = "";
+  resultItems = [];
+
+  if (list.length === 0) {
+    search_result.appendChild(div({ className: "search-empty" }, "沒有符合的結果"));
+    selectedIndex = -1;
+    return;
   }
 
-  return span({}, `[${obj.id}] `, linkElement);
+  for (const obj of list) {
+    const el = createResultItem(obj);
+    search_result.appendChild(el);
+    resultItems.push(el);
+  }
+  setSelected(0);
+}
+
+function setSelected(i) {
+  if (resultItems.length === 0) {
+    selectedIndex = -1;
+    return;
+  }
+  // wrap-around：往上超過頭跳到尾、往下超過尾跳回頭
+  selectedIndex = ((i % resultItems.length) + resultItems.length) % resultItems.length;
+  resultItems.forEach((el, idx) => {
+    el.classList.toggle("selected", idx === selectedIndex);
+  });
+  resultItems[selectedIndex].scrollIntoView({ block: "nearest" });
 }
 
 function displayAllResults() {
-  const search_result = $("#search-result");
-  search_result.innerHTML = "";
-  for (const obj of allDocuments) {
-    search_result.appendChild(createResultSpan(obj));
-    search_result.appendChild(br({}));
-  }
+  renderResults(allDocuments);
 }
 
 let dialogOpen = false;
+function setDialog(dialog, open) {
+  if (open) {
+    dialog.showModal();
+    dialogOpen = true;
+    $("#whole").classList.add("blur");
+    // 開啟後把鍵盤 focus 放到搜尋輸入框
+    const bar = $("#search-bar");
+    bar.focus();
+    bar.select();
+  } else {
+    // 只要呼叫 close()，dialog 的 "close" 事件會統一做善後
+    dialog.close();
+  }
+}
+
+// Esc / backdrop / .close() 任何關閉方式都會走這裡，狀態不會失同步
+$("#search-dialog").addEventListener("close", () => {
+  dialogOpen = false;
+  $("#whole").classList.remove("blur");
+});
+
 document.addEventListener(
   "keydown",
   (event) => {
@@ -90,13 +144,9 @@ document.addEventListener(
     if ((event.metaKey || event.ctrlKey) && keyName === "k") {
       const dialog = $("#search-dialog");
       if (dialogOpen) {
-        $("#whole").classList.remove("blur");
-        dialog.close();
-        dialogOpen = !dialogOpen;
+        setDialog(dialog, false);
       } else {
-        dialog.showModal();
-        dialogOpen = !dialogOpen;
-        $("#whole").classList.add("blur");
+        setDialog(dialog, true);
       }
     }
   },
@@ -112,17 +162,31 @@ input.addEventListener(
       return;
     }
 
-    let results = window.miniSearch.search(evt.target.value, {
+    const results = window.miniSearch.search(evt.target.value, {
       fields: ["taxon", "title", "text"],
       prefix: true,
     });
-
-    const search_result = $("#search-result");
-    search_result.innerHTML = "";
-    for (const obj of results) {
-      search_result.appendChild(createResultSpan(obj));
-      search_result.appendChild(br({}));
-    }
+    renderResults(results);
   },
   false
 );
+
+// 方向鍵在結果間移動、Enter 前往目前選取的項目
+input.addEventListener("keydown", function (evt) {
+  switch (evt.key) {
+    case "ArrowDown":
+      evt.preventDefault();
+      setSelected(selectedIndex + 1);
+      break;
+    case "ArrowUp":
+      evt.preventDefault();
+      setSelected(selectedIndex - 1);
+      break;
+    case "Enter":
+      if (selectedIndex >= 0 && resultItems[selectedIndex]) {
+        evt.preventDefault();
+        window.location.assign(resultItems[selectedIndex].href);
+      }
+      break;
+  }
+});
