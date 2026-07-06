@@ -106,6 +106,16 @@ function setSelected(i) {
   resultItems[selectedIndex].scrollIntoView({ block: "nearest" });
 }
 
+// 鍵盤與滑鼠共用同一個 selectedIndex
+$("#search-result").addEventListener("mousemove", (evt) => {
+  const item = evt.target.closest(".search-result-item");
+  if (!item) return;
+  const idx = resultItems.indexOf(item);
+  if (idx >= 0 && idx !== selectedIndex) {
+    setSelected(idx);
+  }
+});
+
 function displayAllResults() {
   renderResults(allDocuments);
 }

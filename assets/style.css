@@ -256,7 +256,6 @@ a.search-result-item {
   color: inherit;
   line-height: 1.35;
 }
-a.search-result-item:hover,
 a.search-result-item.selected {
   background: #eef0ff;
 }
