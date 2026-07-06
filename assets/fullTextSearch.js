@@ -61,11 +61,12 @@ function createResultItem(obj) {
   const title = Array.isArray(obj.title) ? obj.title.join("") : obj.title || "";
   titleSpan.innerHTML = title || `${obj.id}`;
 
-  const children = [span({ className: "sr-id" }, `[${obj.id}]`)];
+  const children = [];
   if (obj.taxon) {
-    children.push(span({ className: "sr-taxon" }, obj.taxon));
+    children.push(span({ className: "sr-taxon" }, `${obj.taxon}.`));
   }
   children.push(titleSpan);
+  children.push(span({ className: "sr-id" }, `[${obj.id}]`));
 
   return a({ className: "search-result-item", href }, ...children);
 }
