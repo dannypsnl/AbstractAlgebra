@@ -248,13 +248,19 @@ body.blur {
 }
 a.search-result-item {
   display: flex;
-  align-items: baseline;
-  gap: 0.5rem;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.15rem;
   padding: 0.4rem 0.6rem;
   border-radius: 8px;
   text-decoration: none;
   color: inherit;
   line-height: 1.35;
+}
+.search-result-item .sr-line {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
 }
 a.search-result-item.selected {
   background: #eef0ff;
@@ -274,6 +280,19 @@ a.search-result-item.selected {
 }
 .search-result-item .sr-title {
   color: #222;
+}
+.search-result-item .sr-excerpt {
+  color: #666;
+  font-size: 0.85rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.search-result-item .sr-excerpt mark {
+  background: #fff0a8;
+  color: inherit;
+  border-radius: 2px;
 }
 .search-empty {
   padding: 1rem 0.6rem;

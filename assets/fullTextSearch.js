@@ -1,10 +1,9 @@
 let sourcemap = [];
 
 fetch("/sourcemap.json")
-  .then((value) => {
-    value.json().then((sm) => {
+  .then(value => value.json())
+  .then(sm => {
       sourcemap = sm;
-    });
   })
   .catch((_) => console.log("You're not in local development environment"));
 
@@ -36,59 +35,98 @@ document.addEventListener(
   false
 );
 
-// `MiniSearch` is already in global
-window.miniSearch = new MiniSearch({
-  fields: ["taxon", "title", "text"], // fields to index for full-text search
-  storeFields: ["taxon", "title"], // fields to return with search results
+const searchBar = input({
+  type: "text",
+  id: "search-bar",
+  spellcheck: false,
+  autocomplete: "off",
+  placeholder: "Type title or ID to search……",
 });
+const searchResult = div({ id: "search-result" });
+const searchDialog = dialog(
+  { id: "search-dialog" },
+  div(
+    { className: "search-header" },
+    a({ className: "search-home", href: "/", title: "Home" }, "⌂ Home"),
+    searchBar
+  ),
+  searchResult,
+  div(
+    { className: "search-footer" },
+    span(kbd("↑"), kbd("↓"), " Move"),
+    span(kbd("↵"), " Open"),
+    span(kbd("esc"), " Close")
+  )
+);
+document.body.prepend(searchDialog);
 
-let allDocuments = [];
+let cards = [];
+let pagefind = null;
+let loading = null;
 
-fetch("/search.json")
-  .then((value) => {
-    value.json().then((documents) => {
-      allDocuments = documents;
-      window.miniSearch.addAll(documents);
-      displayAllResults();
-    });
-  })
-  .catch((err) => console.error(err));
+function loadSearch() {
+  if (loading) return loading;
+  loading = Promise.all([
+    fetch("/cards.json")
+      .then((r) => r.json())
+      .then((list) => {
+        cards = list;
+      })
+      .catch((err) => console.error("failed to load /cards.json", err)),
+    import("/pagefind/pagefind.js")
+      .then(async (mod) => {
+        await mod.init();
+        pagefind = mod;
+      })
+      .catch((err) => console.warn("pagefind unavailable, title-only search", err)),
+  ]);
+  return loading;
+}
+
+function addrOf(url) {
+  const addr = trim(url.split(/[?#]/)[0], "/");
+  return addr === "" ? "index" : addr;
+}
 
 function createResultItem(obj) {
   const href = obj.id === "index" ? "/" : `/${obj.id}`;
 
   const titleSpan = span({ className: "sr-title" });
-  const title = Array.isArray(obj.title) ? obj.title.join("") : obj.title || "";
-  titleSpan.innerHTML = title || `${obj.id}`;
+  titleSpan.innerHTML = obj.title || `${obj.id}`;
 
-  const children = [];
+  const line = [];
   if (obj.taxon) {
-    children.push(span({ className: "sr-taxon" }, `${obj.taxon}.`));
+    line.push(span({ className: "sr-taxon" }, `${obj.taxon}.`));
   }
-  children.push(titleSpan);
-  children.push(span({ className: "sr-id" }, `[${obj.id}]`));
+  line.push(titleSpan);
+  line.push(span({ className: "sr-id" }, `[${obj.id}]`));
+
+  const children = [span({ className: "sr-line" }, ...line)];
+  if (obj.excerpt) {
+    const excerpt = span({ className: "sr-excerpt" });
+    excerpt.innerHTML = obj.excerpt;
+    children.push(excerpt);
+  }
 
   return a({ className: "search-result-item", href }, ...children);
 }
 
-// 目前畫面上的結果項目與被選取的 index
 let resultItems = [];
 let selectedIndex = -1;
 
 function renderResults(list) {
-  const search_result = $("#search-result");
-  search_result.innerHTML = "";
+  searchResult.innerHTML = "";
   resultItems = [];
 
   if (list.length === 0) {
-    search_result.appendChild(div({ className: "search-empty" }, "沒有符合的結果"));
+    searchResult.appendChild(div({ className: "search-empty" }, "No result"));
     selectedIndex = -1;
     return;
   }
 
   for (const obj of list) {
     const el = createResultItem(obj);
-    search_result.appendChild(el);
+    searchResult.appendChild(el);
     resultItems.push(el);
   }
   setSelected(0);
@@ -99,7 +137,6 @@ function setSelected(i) {
     selectedIndex = -1;
     return;
   }
-  // wrap-around：往上超過頭跳到尾、往下超過尾跳回頭
   selectedIndex = ((i % resultItems.length) + resultItems.length) % resultItems.length;
   resultItems.forEach((el, idx) => {
     el.classList.toggle("selected", idx === selectedIndex);
@@ -107,8 +144,7 @@ function setSelected(i) {
   resultItems[selectedIndex].scrollIntoView({ block: "nearest" });
 }
 
-// 鍵盤與滑鼠共用同一個 selectedIndex
-$("#search-result").addEventListener("mousemove", (evt) => {
+searchResult.addEventListener("mousemove", (evt) => {
   const item = evt.target.closest(".search-result-item");
   if (!item) return;
   const idx = resultItems.indexOf(item);
@@ -117,30 +153,94 @@ $("#search-result").addEventListener("mousemove", (evt) => {
   }
 });
 
-function displayAllResults() {
-  renderResults(allDocuments);
+const FULL_TEXT_LIMIT = 25;
+
+function relevanceFilter(query) {
+  const needle = query.toLowerCase();
+  const terms = query.split(/\s+/).filter((t) => t.length >= 2).map((t) => t.toLowerCase());
+  return (excerpt) => {
+    const text = (excerpt || "").replace(/<[^>]*>/g, "").toLowerCase();
+    return text.includes(needle) || terms.some((t) => text.includes(t));
+  };
+}
+
+let querySeq = 0;
+
+async function runQuery(query) {
+  const seq = ++querySeq;
+  await loadSearch();
+  if (seq !== querySeq) return;
+
+  const q = query.trim();
+  if (!q) {
+    renderResults(cards);
+    return;
+  }
+
+  const needle = q.toLowerCase();
+  const byTitle = cards.filter(
+    (c) =>
+      c.id.toLowerCase().includes(needle) ||
+      (c.plain || "").toLowerCase().includes(needle)
+  );
+  renderResults(byTitle);
+
+  if (!pagefind) return;
+
+  const found = await pagefind.debouncedSearch(q, {}, 120);
+  if (found === null || seq !== querySeq) return;
+
+  const known = new Set(byTitle.map((c) => c.id));
+  const byId = new Map(cards.map((c) => [c.id, c]));
+  const results = await Promise.all(
+    found.results.slice(0, FULL_TEXT_LIMIT).map((r) => r.data())
+  );
+  if (seq !== querySeq) return;
+
+  const relevant = relevanceFilter(q);
+  const merged = byTitle.slice();
+  for (const data of results) {
+    const id = addrOf(data.url);
+    if (known.has(id) || !relevant(data.excerpt)) continue;
+    known.add(id);
+    const card = byId.get(id);
+    merged.push({
+      id,
+      title: card?.title ?? data.meta?.title ?? id,
+      taxon: card?.taxon ?? data.meta?.taxon,
+      excerpt: data.excerpt,
+    });
+  }
+  renderResults(merged);
 }
 
 let dialogOpen = false;
-function setDialog(dialog, open) {
+function setDialog(open) {
   if (open) {
-    dialog.showModal();
+    searchDialog.showModal();
     dialogOpen = true;
     $("#whole").classList.add("blur");
-    // 開啟後把鍵盤 focus 放到搜尋輸入框
-    const bar = $("#search-bar");
-    bar.focus();
-    bar.select();
+    searchBar.focus();
+    searchBar.select();
+    runQuery(searchBar.value);
   } else {
-    // 只要呼叫 close()，dialog 的 "close" 事件會統一做善後
-    dialog.close();
+    searchDialog.close();
   }
 }
 
-// Esc / backdrop / .close() 任何關閉方式都會走這裡，狀態不會失同步
-$("#search-dialog").addEventListener("close", () => {
+searchDialog.addEventListener("close", () => {
   dialogOpen = false;
   $("#whole").classList.remove("blur");
+});
+
+let composing = false;
+let compositionEndedAt = 0;
+const COMPOSITION_ESCAPE_MS = 150;
+
+searchDialog.addEventListener("cancel", (evt) => {
+  if (composing || Date.now() - compositionEndedAt < COMPOSITION_ESCAPE_MS) {
+    evt.preventDefault();
+  }
 });
 
 document.addEventListener(
@@ -153,37 +253,43 @@ document.addEventListener(
     }
 
     if ((event.metaKey || event.ctrlKey) && keyName === "k") {
-      const dialog = $("#search-dialog");
-      if (dialogOpen) {
-        setDialog(dialog, false);
-      } else {
-        setDialog(dialog, true);
-      }
+      setDialog(!dialogOpen);
     }
   },
   false
 );
 
-const input = $("#search-bar");
-input.addEventListener(
+const isComposing = (evt) => evt.isComposing || evt.keyCode === 229;
+
+let lastQueried = null;
+function queryFromInput(value) {
+  if (value === lastQueried) return;
+  lastQueried = value;
+  runQuery(value);
+}
+
+searchBar.addEventListener(
   "input",
   function (evt) {
-    if (!evt.target.value.trim()) {
-      displayAllResults();
-      return;
-    }
-
-    const results = window.miniSearch.search(evt.target.value, {
-      fields: ["taxon", "title", "text"],
-      prefix: true,
-    });
-    renderResults(results);
+    if (isComposing(evt)) return;
+    queryFromInput(evt.target.value);
   },
   false
 );
 
-// 方向鍵在結果間移動、Enter 前往目前選取的項目
-input.addEventListener("keydown", function (evt) {
+searchBar.addEventListener("compositionstart", function () {
+  composing = true;
+});
+
+searchBar.addEventListener("compositionend", function (evt) {
+  composing = false;
+  compositionEndedAt = Date.now();
+  queryFromInput(evt.target.value);
+});
+
+searchBar.addEventListener("keydown", function (evt) {
+  if (isComposing(evt)) return;
+
   switch (evt.key) {
     case "ArrowDown":
       evt.preventDefault();

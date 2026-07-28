@@ -1,5 +1,8 @@
 {
   "dependencies": {
     "vercel": "^54.20.1"
+  },
+  "devDependencies": {
+    "pagefind": "^1.5.2"
   }
 }

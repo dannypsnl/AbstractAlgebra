@@ -15,6 +15,7 @@ CARDS   := $(ADDRS:%=content/track/%.scrbl)
 default: $(CARDS)
 	@uv run fix-links.py
 	@raco tr build
+	@node build-search-index.mjs _build
 
 _tmp/mirror/%.agda: src/%.lagda.scrbl
 	@raco tangle-lagda mirror $< $@
