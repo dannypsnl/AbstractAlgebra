@@ -10,8 +10,7 @@
 uv run serve.py
 ```
 
-跑本地的 watch server，port `5321`
-
+啟動本地的 watch server，port `5321`
 
 依賴有
 
