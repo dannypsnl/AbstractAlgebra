@@ -122,8 +122,24 @@ nav#toc > h1 {
 nav#toc a {
   color: #555;
 }
+nav#toc ol {
+  list-style: none;
+  margin: 0;
+  padding-left: 1.25em;
+}
+.toc-bullet {
+  display: inline-block;
+  font-size: 0.9em;
+  margin-right: 0.4em;
+  color: #8c8c8c;
+  text-decoration: none;
+  vertical-align: middle;
+}
+.toc-title {
+  text-decoration: none;
+}
 
-a.toc:hover {
+a.toc-title:hover {
   background-color: #9094fbff;
 }
 a.mention:hover {
@@ -226,8 +242,8 @@ body.blur {
   white-space: nowrap;
 }
 .search-home:hover {
-  background: #9094fb;
-  border-color: #9094fb;
+  background: #9094fbff;
+  border-color: #9094fbff;
   color: #fff;
 }
 #search-bar {
@@ -238,7 +254,7 @@ body.blur {
   background: transparent;
   color: inherit;
   font-family: inherit;
-  font-size: 1.1rem;
+  font-size: 1rem;
   padding: 0.4rem 0.1rem;
 }
 #search-result {
@@ -266,13 +282,13 @@ a.search-result-item.selected {
   background: #eef0ff;
 }
 a.search-result-item.selected {
-  box-shadow: inset 0 0 0 1px #9094fb;
+  box-shadow: inset 0 0 0 1px #9094fbff;
 }
 .search-result-item .sr-id {
   flex: none;
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 0.8rem;
-  color: #9a9aa6;
+  color: #8c8c8c;
 }
 .search-result-item .sr-taxon {
   flex: none;
@@ -281,6 +297,7 @@ a.search-result-item.selected {
 .search-result-item .sr-title {
   color: #222;
 }
+/* Pagefind 全文命中的前後文，命中詞是 <mark> */
 .search-result-item .sr-excerpt {
   color: #666;
   font-size: 0.85rem;
