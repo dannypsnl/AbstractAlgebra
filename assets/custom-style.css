@@ -1,223 +1,29 @@
-/* Inria Sans (SIL OFL 1.1), self-hosted woff2 from Google Fonts subset. */
-@font-face {
-  font-family: "Inria Sans";
-  font-style: normal;
-  font-weight: 300;
-  font-display: swap;
-  src: url("fonts/InriaSans-Light.woff2") format("woff2");
-}
-@font-face {
-  font-family: "Inria Sans";
-  font-style: italic;
-  font-weight: 300;
-  font-display: swap;
-  src: url("fonts/InriaSans-LightItalic.woff2") format("woff2");
-}
-@font-face {
-  font-family: "Inria Sans";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("fonts/InriaSans-Regular.woff2") format("woff2");
-}
-@font-face {
-  font-family: "Inria Sans";
-  font-style: italic;
-  font-weight: 400;
-  font-display: swap;
-  src: url("fonts/InriaSans-Italic.woff2") format("woff2");
-}
-@font-face {
-  font-family: "Inria Sans";
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url("fonts/InriaSans-Bold.woff2") format("woff2");
-}
-@font-face {
-  font-family: "Inria Sans";
-  font-style: italic;
-  font-weight: 700;
-  font-display: swap;
-  src: url("fonts/InriaSans-BoldItalic.woff2") format("woff2");
-}
+/* Loaded after tr's bundled style.css via site.rkt's 'head — only what tr
+   doesn't already provide: CJK spacing, the search UI (built by
+   fullTextSearch.js), literate Agda highlighting, and code-highlight classes
+   from `violet weave` / tree-sitter (@pre[#:lang ...]). */
 
-.top-wrapper {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2em;
-  padding: 0;
-}
-
-@media (min-width: 60rem) {
-  .top-wrapper {
-    grid-template-columns: 75ch minmax(0, 24rem);
-    justify-content: start;
-  }
-}
-
-#whole {
-  margin-block-start: 2em;
-  margin-inline: clamp(1rem, 4vw, 2em);
-}
-
-footer {
-  display: block;
-  float: left;
-}
-
-h1 {
-  margin: 0;
-  font-size: 1.5em;
-}
-article > details > summary > header > h1 {
-  font-size: 1.2em;
-}
-
-details {
-  padding-bottom: 1em;
-}
-details:hover {
-  box-shadow: 0 0 20px #9094fbff;
-  border-radius: 8px;
-}
-/* 不顯示 summary 的標記 */
-details > summary {
-  list-style: none;
-}
-details > summary::-webkit-details-marker {
-  display: none;
-}
-details > summary > header > h1 {
-  display: inline;
-}
-
-article {
-  display: block;
-}
-
-nav#toc {
-  display: none;
-}
-
-@media (min-width: 60rem) {
-  .top-wrapper > main,
-  .top-wrapper > details {
-    grid-column: 1;
-  }
-  .top-wrapper > nav,
-  .top-wrapper > #context,
-  .top-wrapper > #references,
-  .top-wrapper > #backlinks {
-    grid-column: 2;
-  }
-  nav#toc {
-    display: block;
-  }
-}
-nav#toc > h1 {
-  margin-top: 0;
-  font-size: 16pt;
-}
-nav#toc a {
-  color: #555;
-}
-nav#toc ol {
-  list-style: none;
-  margin: 0;
-  padding-left: 1.25em;
-}
-.toc-bullet {
-  display: inline-block;
-  font-size: 0.9em;
-  margin-right: 0.4em;
-  color: #8c8c8c;
-  text-decoration: none;
-  vertical-align: middle;
-}
-.toc-title {
-  text-decoration: none;
-}
-
-a.toc-title:hover {
-  background-color: #9094fbff;
-}
-a.mention:hover {
-  background-color: #9094fbff;
-}
-a.mention {
-  color: #8c8c8c;
-  text-decoration: underline dotted;
-}
-a.link-self {
-  color: #8c8c8c;
-  text-decoration: underline dotted;
-  white-space: nowrap;
-}
-a.link-home {
-  display: block;
-  color: #666;
-  font-size: 24px;
-  text-decoration: none;
-  margin-bottom: 1em;
-}
-
-.taxon {
-  color: #8c8c8c;
-}
-#toc ol,
-.tr-body {
-  counter-reset: tr-num;
-}
-.taxon.numbered {
-  counter-increment: tr-num;
-}
-.taxon.numbered::after {
-  content: counters(tr-num, ".") ".";
-}
-
-.center {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-#references > h1,
-#related > h1,
-#backlinks > h1,
-#context > h1 {
-  margin-left: 0.5rem;
-}
-
-.metadata ul {
-  padding: 0;
-  list-style-type: disc;
-}
-.metadata ul,
-.metadata ul li {
-  display: inline;
-}
-
+/* 自動在 CJK 與西文/數字間補空隙；不支援的瀏覽器（如 Safari）會忽略 */
 body {
-  font-family: "Inria Sans", sans-serif;
-  font-optical-sizing: auto;
-  transition: 0.3s filter;
-  /* 自動在 CJK 與西文/數字間補空隙；不支援的瀏覽器（如 Safari）會忽略 */
   text-autospace: normal;
 }
 /* 程式碼還是用 monospace 對齊，不要插入 autospace */
-pre,
-code,
 .Agda {
   text-autospace: no-autospace;
 }
-/* Match `.katex` font-size to the default text font "Inria Sans". */
-.katex {
-  font-size: 1.15em;
+
+/* This site's code blocks don't wrap by default; only the ones carrying a
+   hover tooltip (.vt-tip, see below) need to. */
+pre {
+  margin-top: 0em;
+  white-space: pre;
 }
-body.blur {
-  filter: blur(3px) contrast(0.8) brightness(0.8);
+pre:has(.vt-tip) {
+  overflow: visible;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
+
 /* `margin: auto` can put a dialog in the middle of screen */
 #search-dialog {
   margin: auto;
@@ -290,8 +96,6 @@ a.search-result-item {
 }
 a.search-result-item.selected {
   background: #eef0ff;
-}
-a.search-result-item.selected {
   box-shadow: inset 0 0 0 1px #9094fbff;
 }
 .search-result-item .sr-id {
@@ -341,53 +145,9 @@ a.search-result-item.selected {
 kbd {
   border: 2px solid #cdcdcd;
   border-radius: 0.25rem;
-  box-shadow: #cdcdcd;
   box-shadow: inset 0 -1px 0 0 #cdcdcd;
   font-size: 0.825rem;
   padding: 0.25rem;
-}
-
-p {
-  line-height: 1.4rem;
-}
-
-pre,
-img,
-section,
-center {
-  overflow-y: hidden;
-}
-code {
-  background-color: rgba(0, 100, 100, 0.04);
-}
-pre {
-  border-radius: 2px;
-  background-color: rgba(0, 100, 100, 0.04);
-  padding: 0.5em;
-  font-size: 11pt;
-  margin-top: 0em;
-  overflow-x: auto;
-  white-space: pre;
-}
-pre:has(.vt-tip) {
-  overflow: visible;
-  white-space: pre-wrap;
-  white-space: -moz-pre-wrap;
-  white-space: -pre-wrap;
-  white-space: -o-pre-wrap;
-  word-wrap: break-word;
-}
-
-iframe {
-  border: none;
-}
-
-blockquote {
-  margin: 20px;
-  padding: 10px;
-  border-left: 5px solid #ccc;
-  background-color: #f9f9f9;
-  font-style: italic;
 }
 
 .Agda {
