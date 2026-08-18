@@ -165,6 +165,16 @@ a.link-home {
 .taxon {
   color: #8c8c8c;
 }
+#toc ol,
+.tr-body {
+  counter-reset: tr-num;
+}
+.taxon.numbered {
+  counter-increment: tr-num;
+}
+.taxon.numbered::after {
+  content: counters(tr-num, ".") ".";
+}
 
 .center {
   display: block;
