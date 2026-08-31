@@ -1,9 +1,19 @@
+// Build the Pagefind index from tr's per-card metadata.
+//
+// Not `pagefind --site _build`: this site transcludes, so a card's text also
+// appears in index.html, in every parent card's page and in its own, and
+// crawling the HTML would index the same passage several times over while the
+// huge pages drown out the real cards. `raco tr meta --all` emits one record
+// per card, so the index unit matches the site's own unit of meaning.
+//
+// Usage: node build-search-index.mjs [output-dir]   (default _build)
 import * as pagefind from "pagefind";
-import { readFile, readdir, rm, writeFile } from "node:fs/promises";
+import { rm, writeFile } from "node:fs/promises";
+import { existsSync } from "node:fs";
+import { execFileSync } from "node:child_process";
 import { join } from "node:path";
 
 const outDir = process.argv[2] ?? "_build";
-const tmpDir = process.argv[3] ?? "_tmp";
 
 const entities = { amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", nbsp: " " };
 const decodeEntities = (s) =>
@@ -29,17 +39,23 @@ const titleToText = (segments) =>
     .replace(/\s+/g, " ")
     .trim();
 
-const metaFiles = (await readdir(tmpDir, { recursive: true }))
-  .filter((f) => f.endsWith(".metadata.json"))
-  .sort();
-const docs = await Promise.all(
-  metaFiles.map(async (f) => JSON.parse(await readFile(join(tmpDir, f), "utf8")))
-);
-if (docs.length === 0) {
-  throw new Error(`no *.metadata.json under ${tmpDir}/ — did tr build run?`);
+const allDocs = JSON.parse(execFileSync("raco", ["tr", "meta", "--all"], { encoding: "utf8" }));
+if (allDocs.length === 0) {
+  throw new Error("raco tr meta --all returned no cards — did tr build run?");
 }
 
-const LANGUAGE = "zh";
+// The metadata store is cumulative: tr writes an addr's metadata once and never
+// deletes it, so a card later excluded from the build would otherwise leak into
+// every index from then on. A card's own output directory exists only for the
+// addrs actually built this run, which makes it the authoritative membership
+// check.
+const cardOutputPath = (id) => (id === "index" ? join(outDir, "index.html") : join(outDir, id, "index.html"));
+const docs = allDocs.filter((doc) => existsSync(cardOutputPath(doc.id)));
+if (docs.length < allDocs.length) {
+  console.log(`pagefind: skipped ${allDocs.length - docs.length} card(s) not built into ${outDir}`);
+}
+
+const LANGUAGE = "en";
 
 const { index } = await pagefind.createIndex({ forceLanguage: LANGUAGE });
 
